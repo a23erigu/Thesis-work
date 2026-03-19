@@ -1,0 +1,11 @@
+services:
+  test-app:
+    build: .
+    ports:
+      - '8090:8090'
+    networks:
+      - backend-network
+      
+networks:
+  backend-network:
+    external: true

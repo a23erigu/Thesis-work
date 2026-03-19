@@ -1,0 +1,17 @@
+{
+  "name": "petclinic",
+  "version": "1.0.0",
+  "description": "test",
+  "license": "ISC",
+  "author": "Erik",
+  "type": "commonjs",
+  "main": "Petclinic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Petclinic.js"
+  },
+  "dependencies": {
+    "pg": "^8.20.0",
+    "sequelize": "^6.37.8"
+  }
+}
