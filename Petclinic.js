@@ -139,76 +139,40 @@ var Vet_Specialty = sequelize.define('Vet_Specialty', {}, {
 });
 Vet.belongsToMany(Specialty, { through: Vet_Specialty, foreignKey: "vet_id" });
 Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id" });
-app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var owners, types, pets, visits, vets, specialties;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, Owner.findAll()];
-            case 1:
-                owners = _a.sent();
-                return [4 /*yield*/, Type.findAll()];
-            case 2:
-                types = _a.sent();
-                return [4 /*yield*/, Pet.findAll()];
-            case 3:
-                pets = _a.sent();
-                return [4 /*yield*/, Visit.findAll()];
-            case 4:
-                visits = _a.sent();
-                return [4 /*yield*/, Vet.findAll()];
-            case 5:
-                vets = _a.sent();
-                return [4 /*yield*/, Specialty.findAll()];
-            case 6:
-                specialties = _a.sent();
-                res.json({
-                    owners: owners,
-                    types: types,
-                    pets: pets,
-                    visits: visits,
-                    vets: vets,
-                    specialties: specialties,
-                });
-                return [2 /*return*/];
-        }
-    });
-}); });
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var owners, types, pets, visits, vets, specialties, User3pets, petsFownerN, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery, radiology;
+    return __generator(this, function (_a) {
+        return [2 /*return*/];
+    });
+}); })();
+app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var owners, types, pets, visits, vets, specialties, user3pets, petsFowner, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Owner.findAll()];
             case 1:
                 owners = _a.sent();
-                console.log('All users:', JSON.stringify(owners, null, 2));
                 return [4 /*yield*/, Type.findAll()];
             case 2:
                 types = _a.sent();
-                console.log('All types:', JSON.stringify(types, null, 2));
                 return [4 /*yield*/, Pet.findAll()];
             case 3:
                 pets = _a.sent();
-                console.log('All pets:', JSON.stringify(pets, null, 2));
                 return [4 /*yield*/, Visit.findAll()];
             case 4:
                 visits = _a.sent();
-                console.log('All visits:', JSON.stringify(visits, null, 2));
                 return [4 /*yield*/, Vet.findAll()];
             case 5:
                 vets = _a.sent();
-                console.log('All vets:', JSON.stringify(vets, null, 2));
                 return [4 /*yield*/, Specialty.findAll()];
             case 6:
                 specialties = _a.sent();
-                console.log('All specialties:', JSON.stringify(specialties, null, 2));
                 return [4 /*yield*/, Pet.findAll({
                         where: {
                             owner_id: 3
                         }
                     })];
             case 7:
-                User3pets = _a.sent();
-                console.log('All pets from owner 3:', JSON.stringify(User3pets, null, 2));
+                user3pets = _a.sent();
                 return [4 /*yield*/, Owner.findAll({
                         where: {
                             first_name: 'Betty'
@@ -219,8 +183,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                             }]
                     })];
             case 8:
-                petsFownerN = _a.sent();
-                console.log('All pets with owner Betty:', JSON.stringify(petsFownerN, null, 2));
+                petsFowner = _a.sent();
                 return [4 /*yield*/, Pet.findAll({
                         include: [{
                                 model: Owner,
@@ -231,7 +194,6 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     })];
             case 9:
                 petsFcity = _a.sent();
-                console.log('All pets living in Madison:', JSON.stringify(petsFcity, null, 2));
                 return [4 /*yield*/, Owner.findAll({
                         include: [{
                                 model: Pet,
@@ -244,7 +206,6 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     })];
             case 10:
                 ownerWpetWvisit = _a.sent();
-                console.log('All owners who have had a visit with a pet:', JSON.stringify(ownerWpetWvisit, null, 2));
                 return [4 /*yield*/, Vet_Specialty.findAll({
                         where: {
                             vet_id: 3
@@ -252,7 +213,6 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     })];
             case 11:
                 vet3spec = _a.sent();
-                console.log('All specialty id from vet 3:', JSON.stringify(vet3spec, null, 2));
                 return [4 /*yield*/, Vet.findAll({
                         include: [{
                                 model: Specialty,
@@ -262,19 +222,24 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     })];
             case 12:
                 vetWsurgery = _a.sent();
-                console.log('All vets with surgery specialty:', JSON.stringify(vetWsurgery, null, 2));
-                return [4 /*yield*/, Specialty.findAll({
-                        where: {
-                            id: 1
-                        }
-                    })];
-            case 13:
-                radiology = _a.sent();
-                console.log('Radiology:', JSON.stringify(radiology, null, 2));
+                res.json({
+                    owners: owners,
+                    types: types,
+                    pets: pets,
+                    visits: visits,
+                    vets: vets,
+                    specialties: specialties,
+                    user3pets: user3pets,
+                    petsFowner: petsFowner,
+                    petsFcity: petsFcity,
+                    ownerWpetWvisit: ownerWpetWvisit,
+                    vet3spec: vet3spec,
+                    vetWsurgery: vetWsurgery,
+                });
                 return [2 /*return*/];
         }
     });
-}); })();
+}); });
 var PORT = 8090;
 app.listen(PORT, function () {
     console.log("Example app listening at http://localhost:".concat(PORT));

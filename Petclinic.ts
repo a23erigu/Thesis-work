@@ -142,90 +142,9 @@ const Vet_Specialty = sequelize.define(
 Vet.belongsToMany(Specialty, {through: Vet_Specialty, foreignKey: "vet_id"});          
 Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"});    
 
-app.get('/', async (req, res) => {
 
-  const owners = await Owner.findAll();   //selects all Owners
-  const types = await Type.findAll(); 
-  const pets = await Pet.findAll(); 
-  const visits = await Visit.findAll(); 
-  const vets = await Vet.findAll();
-  const specialties = await Specialty.findAll();
 
-  res.json({    //turns data in to json and gives to website
-    owners,
-    types,
-    pets,
-    visits,
-    vets,
-    specialties,
-  });
-
-});
-
-(async () => {
-
-    const User3pets = await Pet.findAll({
-      where: {
-        owner_id: 3
-      }
-    });       
-    console.log('All pets from owner 3:', JSON.stringify(User3pets, null, 2)); 
-
-    const petsFownerN = await Owner.findAll({
-      where: {
-        first_name: 'Betty'
-      },
-      include: [{
-        model: Pet,
-        required: true,
-      }]
-    });   
-    console.log('All pets with owner Betty:', JSON.stringify(petsFownerN, null, 2)); 
-
-    const petsFcity = await Pet.findAll({
-      include: [{
-        model: Owner,
-        where: {
-          city: 'Madison'
-        }
-      }]
-    });       
-    console.log('All pets living in Madison:', JSON.stringify(petsFcity, null, 2)); 
-
-    const ownerWpetWvisit = await Owner.findAll({
-      include: [{
-        model: Pet,
-        required: true,
-        include: [{
-          model: Visit,
-          required: true,
-        }]
-      }]
-    });       
-    console.log('All owners who have had a visit with a pet:', JSON.stringify(ownerWpetWvisit, null, 2)); 
-
-    const vet3spec = await Vet_Specialty.findAll({
-      where: {
-        vet_id: 3
-      }
-    });       
-    console.log('All specialty id from vet 3:', JSON.stringify(vet3spec, null, 2)); 
-
-    const vetWsurgery = await Vet.findAll({
-      include: [{
-        model: Specialty,
-        required: true,
-        where: { name: "surgery"}
-      }]
-    });       
-    console.log('All vets with surgery specialty:', JSON.stringify(vetWsurgery, null, 2)); 
-
-    const radiology = await Specialty.findAll({
-      where: {
-        id: 1
-      }
-    });
-    console.log('Radiology:', JSON.stringify(radiology, null, 2)); 
+(async () => {          //OUT DATED CODE
 
     // Create
 
@@ -247,7 +166,83 @@ app.get('/', async (req, res) => {
 
 })();
 
-const PORT = 8090
+app.get('/', async (req, res) => {  //ignore these errors (just ts things)
+
+  const owners = await Owner.findAll();   //selects all elements in the database
+  const types = await Type.findAll(); 
+  const pets = await Pet.findAll(); 
+  const visits = await Visit.findAll(); 
+  const vets = await Vet.findAll();
+  const specialties = await Specialty.findAll();
+
+  const user3pets = await Pet.findAll({   // all pets from owner with id 3
+    where: {
+      owner_id: 3
+    }
+  }); 
+
+  const petsFowner = await Owner.findAll({ // all pets from owner Betty
+    where: {
+      first_name: 'Betty'
+    },
+    include: [{
+      model: Pet,
+      required: true,
+    }]
+  });  
+
+  const petsFcity = await Pet.findAll({ // all pets from Madison
+    include: [{
+      model: Owner,
+      where: {
+        city: 'Madison'
+      }
+    }]
+  }); 
+
+  const ownerWpetWvisit = await Owner.findAll({ // owner of pets that have had a visit
+    include: [{
+      model: Pet,
+      required: true,
+      include: [{
+        model: Visit,
+        required: true,
+      }]
+    }]
+  });
+
+  const vet3spec = await Vet_Specialty.findAll({  // all specialty id of vet with id 3
+    where: {
+      vet_id: 3
+    }
+  });
+
+  const vetWsurgery = await Vet.findAll({ // all vets with the surgety specialty
+    include: [{
+      model: Specialty,
+      required: true,
+      where: { name: "surgery"}
+    }]
+  }); 
+
+  res.json({    //turns data in to json and gives to website
+    owners,
+    types,
+    pets,
+    visits,
+    vets,
+    specialties,
+    user3pets,
+    petsFowner,
+    petsFcity,
+    ownerWpetWvisit,
+    vet3spec,
+    vetWsurgery,
+  });
+
+});
+
+const PORT = 8090;
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
