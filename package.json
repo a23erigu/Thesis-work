@@ -11,6 +11,7 @@
     "start": "node Petclinic.js"
   },
   "dependencies": {
+    "express": "^5.2.1",
     "pg": "^8.20.0",
     "sequelize": "^6.37.8"
   }

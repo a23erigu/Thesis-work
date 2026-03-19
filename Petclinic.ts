@@ -1,4 +1,7 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes, Model, json } from 'sequelize';
+const express = require('express');
+
+const app = express();
 
 const sequelize = new Sequelize('petclinic', 'petclinic', 'petclinic', {  //database, username, password
   host: 'postgres',
@@ -139,26 +142,27 @@ const Vet_Specialty = sequelize.define(
 Vet.belongsToMany(Specialty, {through: Vet_Specialty, foreignKey: "vet_id"});          
 Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"});    
 
+app.get('/', async (req, res) => {
+
+  const owners = await Owner.findAll();   //selects all Owners
+  const types = await Type.findAll(); 
+  const pets = await Pet.findAll(); 
+  const visits = await Visit.findAll(); 
+  const vets = await Vet.findAll();
+  const specialties = await Specialty.findAll();
+
+  res.json({    //turns data in to json and gives to website
+    owners,
+    types,
+    pets,
+    visits,
+    vets,
+    specialties,
+  });
+
+});
 
 (async () => {
-
-    const owners = await Owner.findAll();       //selects all users
-    console.log('All users:', JSON.stringify(owners, null, 2));    //prints users 
-
-    const types = await Type.findAll();       
-    console.log('All types:', JSON.stringify(types, null, 2)); 
-
-    const pets = await Pet.findAll();       
-    console.log('All pets:', JSON.stringify(pets, null, 2)); 
-
-    const visits = await Visit.findAll();       
-    console.log('All visits:', JSON.stringify(visits, null, 2)); 
-
-    const vets = await Vet.findAll();       
-    console.log('All vets:', JSON.stringify(vets, null, 2)); 
-
-    const specialties = await Specialty.findAll();       
-    console.log('All specialties:', JSON.stringify(specialties, null, 2)); 
 
     const User3pets = await Pet.findAll({
       where: {
@@ -223,7 +227,6 @@ Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"
     });
     console.log('Radiology:', JSON.stringify(radiology, null, 2)); 
 
-
     // Create
 
     //const Matilda = await Owner.create({first_name: "Matilda", last_name: "Obryan", address: "146 Obal St.", city: "London", telephone: "0008723410"})
@@ -243,3 +246,9 @@ Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"
     */
 
 })();
+
+const PORT = 8090
+
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});

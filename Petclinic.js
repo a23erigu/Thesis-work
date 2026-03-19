@@ -37,6 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sequelize_1 = require("sequelize");
+var express = require('express');
+var app = express();
 var sequelize = new sequelize_1.Sequelize('petclinic', 'petclinic', 'petclinic', {
     host: 'postgres',
     dialect: 'postgres',
@@ -137,6 +139,40 @@ var Vet_Specialty = sequelize.define('Vet_Specialty', {}, {
 });
 Vet.belongsToMany(Specialty, { through: Vet_Specialty, foreignKey: "vet_id" });
 Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id" });
+app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var owners, types, pets, visits, vets, specialties;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, Owner.findAll()];
+            case 1:
+                owners = _a.sent();
+                return [4 /*yield*/, Type.findAll()];
+            case 2:
+                types = _a.sent();
+                return [4 /*yield*/, Pet.findAll()];
+            case 3:
+                pets = _a.sent();
+                return [4 /*yield*/, Visit.findAll()];
+            case 4:
+                visits = _a.sent();
+                return [4 /*yield*/, Vet.findAll()];
+            case 5:
+                vets = _a.sent();
+                return [4 /*yield*/, Specialty.findAll()];
+            case 6:
+                specialties = _a.sent();
+                res.json({
+                    owners: owners,
+                    types: types,
+                    pets: pets,
+                    visits: visits,
+                    vets: vets,
+                    specialties: specialties,
+                });
+                return [2 /*return*/];
+        }
+    });
+}); });
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var owners, types, pets, visits, vets, specialties, User3pets, petsFownerN, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery, radiology;
     return __generator(this, function (_a) {
@@ -144,7 +180,7 @@ Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id
             case 0: return [4 /*yield*/, Owner.findAll()];
             case 1:
                 owners = _a.sent();
-                console.log('All users:', JSON.stringify(owners, null, 2)); //prints users 
+                console.log('All users:', JSON.stringify(owners, null, 2));
                 return [4 /*yield*/, Type.findAll()];
             case 2:
                 types = _a.sent();
@@ -239,3 +275,7 @@ Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id
         }
     });
 }); })();
+var PORT = 8090;
+app.listen(PORT, function () {
+    console.log("Example app listening at http://localhost:".concat(PORT));
+});
