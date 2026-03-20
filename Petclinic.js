@@ -271,7 +271,7 @@ app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, vo
     });
 }); });
 app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, err_1;
+    var Bob, deletedBobSpecialty, deletedBob, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -289,15 +289,18 @@ app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 
                         }
                     })];
             case 2:
-                _a.sent();
+                deletedBobSpecialty = _a.sent();
                 return [4 /*yield*/, Vet.destroy({
                         where: {
                             first_name: "Bob"
                         }
                     })];
             case 3:
-                _a.sent();
-                res.send("deletion works");
+                deletedBob = _a.sent();
+                res.json({
+                    deletedBobSpecialty: deletedBobSpecialty,
+                    deletedBob: deletedBob
+                });
                 return [3 /*break*/, 5];
             case 4:
                 err_1 = _a.sent();
@@ -308,7 +311,7 @@ app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); });
 app.get('/createBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, err_2;
+    var Bob, BobSpecialty, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -324,8 +327,11 @@ app.get('/createBob', function (req, res) { return __awaiter(void 0, void 0, voi
                         specialty_id: 1
                     })];
             case 2:
-                _a.sent();
-                res.send("creation success");
+                BobSpecialty = _a.sent();
+                res.json({
+                    Bob: Bob,
+                    BobSpecialty: BobSpecialty
+                });
                 return [3 /*break*/, 4];
             case 3:
                 err_2 = _a.sent();

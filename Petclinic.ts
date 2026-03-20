@@ -248,19 +248,22 @@ app.get('/killBob', async (req, res) => { // Delete vet bob
       }
     })
 
-    await Vet_Specialty.destroy({ 
+    const deletedBobSpecialty = await Vet_Specialty.destroy({ 
       where: {
         vet_id: Bob?.get("id")
       }
     })
 
-    await Vet.destroy({
+    const deletedBob = await Vet.destroy({
       where: {
         first_name: "Bob"
       }
     })
 
-    res.send("deletion works");
+    res.json({
+      deletedBobSpecialty,
+      deletedBob
+    });
   }
   catch (err) {
     console.log(err);
@@ -276,12 +279,15 @@ app.get('/createBob', async (req, res) => { // Create vet bob
       last_name: "Davidson"}
     );
 
-    await Vet_Specialty.create({
+    const BobSpecialty = await Vet_Specialty.create({
       vet_id: Bob.get("id"),
       specialty_id: 1
     });
 
-    res.send("creation success");
+    res.json({
+      Bob,
+      BobSpecialty
+    })
   }
   catch (err) {
     console.log(err);
