@@ -139,11 +139,7 @@ var Vet_Specialty = sequelize.define('Vet_Specialty', {}, {
 });
 Vet.belongsToMany(Specialty, { through: Vet_Specialty, foreignKey: "vet_id" });
 Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id" });
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/];
-    });
-}); })();
+// select everything
 app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var owners, types, pets, visits, vets, specialties, user3pets, petsFowner, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery;
     return __generator(this, function (_a) {
@@ -240,7 +236,106 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); });
-var PORT = 8090;
+app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var owners, types, pets, visits, vets, specialties;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, Owner.findAll()];
+            case 1:
+                owners = _a.sent();
+                return [4 /*yield*/, Type.findAll()];
+            case 2:
+                types = _a.sent();
+                return [4 /*yield*/, Pet.findAll()];
+            case 3:
+                pets = _a.sent();
+                return [4 /*yield*/, Visit.findAll()];
+            case 4:
+                visits = _a.sent();
+                return [4 /*yield*/, Vet.findAll()];
+            case 5:
+                vets = _a.sent();
+                return [4 /*yield*/, Specialty.findAll()];
+            case 6:
+                specialties = _a.sent();
+                res.json({
+                    owners: owners,
+                    types: types,
+                    pets: pets,
+                    visits: visits,
+                    vets: vets,
+                    specialties: specialties,
+                });
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var Bob, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 4, , 5]);
+                return [4 /*yield*/, Vet.findOne({
+                        where: {
+                            first_name: "Bob"
+                        }
+                    })];
+            case 1:
+                Bob = _a.sent();
+                return [4 /*yield*/, Vet_Specialty.destroy({
+                        where: {
+                            vet_id: Bob === null || Bob === void 0 ? void 0 : Bob.get("id")
+                        }
+                    })];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, Vet.destroy({
+                        where: {
+                            first_name: "Bob"
+                        }
+                    })];
+            case 3:
+                _a.sent();
+                res.send("deletion works");
+                return [3 /*break*/, 5];
+            case 4:
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/createBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var Bob, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Vet.create({
+                        first_name: "Bob",
+                        last_name: "Davidson"
+                    })];
+            case 1:
+                Bob = _a.sent();
+                return [4 /*yield*/, Vet_Specialty.create({
+                        vet_id: Bob.get("id"),
+                        specialty_id: 1
+                    })];
+            case 2:
+                _a.sent();
+                res.send("creation success");
+                return [3 /*break*/, 4];
+            case 3:
+                err_2 = _a.sent();
+                console.log(err_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+var PORT = 8090; // the port used by the website
 app.listen(PORT, function () {
     console.log("Example app listening at http://localhost:".concat(PORT));
 });

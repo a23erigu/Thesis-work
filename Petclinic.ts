@@ -142,33 +142,10 @@ const Vet_Specialty = sequelize.define(
 Vet.belongsToMany(Specialty, {through: Vet_Specialty, foreignKey: "vet_id"});          
 Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"});    
 
+// select everything
+app.get('/', async (req, res) => {  // ignore these errors (just ts things)
 
-
-(async () => {          //OUT DATED CODE
-
-    // Create
-
-    //const Matilda = await Owner.create({first_name: "Matilda", last_name: "Obryan", address: "146 Obal St.", city: "London", telephone: "0008723410"})
-
-    //const Bob = await Vet.create({first_name: "Bob", last_name: "Davidson"});
-    //await Vet_Specialty.create({vet_id: Bob.get("id"), specialty_id: 1});
-    
-
-
-    // Delete
-    /*
-    await Vet.destroy({
-      where: {
-        first_name: "Bob"
-      }
-    })
-    */
-
-})();
-
-app.get('/', async (req, res) => {  //ignore these errors (just ts things)
-
-  const owners = await Owner.findAll();   //selects all elements in the database
+  const owners = await Owner.findAll();   // selects all elements in the database
   const types = await Type.findAll(); 
   const pets = await Pet.findAll(); 
   const visits = await Visit.findAll(); 
@@ -225,7 +202,7 @@ app.get('/', async (req, res) => {  //ignore these errors (just ts things)
     }]
   }); 
 
-  res.json({    //turns data in to json and gives to website
+  res.json({    // turns data in to json and gives to website
     owners,
     types,
     pets,
@@ -242,7 +219,77 @@ app.get('/', async (req, res) => {  //ignore these errors (just ts things)
 
 });
 
-const PORT = 8090;
+app.get('/AllElement', async (req, res) => {  // Selects all elements in the database
+
+  const owners = await Owner.findAll();   
+  const types = await Type.findAll(); 
+  const pets = await Pet.findAll(); 
+  const visits = await Visit.findAll(); 
+  const vets = await Vet.findAll();
+  const specialties = await Specialty.findAll();
+
+  res.json({
+    owners,
+    types,
+    pets,
+    visits,
+    vets,
+    specialties,
+  })
+
+});
+
+app.get('/killBob', async (req, res) => { // Delete vet bob
+
+  try {
+    const Bob = await Vet.findOne({
+      where: {
+        first_name: "Bob"
+      }
+    })
+
+    await Vet_Specialty.destroy({ 
+      where: {
+        vet_id: Bob?.get("id")
+      }
+    })
+
+    await Vet.destroy({
+      where: {
+        first_name: "Bob"
+      }
+    })
+
+    res.send("deletion works");
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+})
+
+app.get('/createBob', async (req, res) => { // Create vet bob
+
+  try {
+    const Bob = await Vet.create({
+      first_name: "Bob", 
+      last_name: "Davidson"}
+    );
+
+    await Vet_Specialty.create({
+      vet_id: Bob.get("id"),
+      specialty_id: 1
+    });
+
+    res.send("creation success");
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+})
+
+const PORT = 8090;    // the port used by the website
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
