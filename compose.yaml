@@ -1,5 +1,5 @@
 services:
-  test-app:
+  petclinic-app:
     build: .
     ports:
       - '8090:8090'

@@ -239,7 +239,17 @@ app.get('/AllElement', async (req, res) => {  // Selects all elements in the dat
 
 });
 
-app.get('/killBob', async (req, res) => { // Delete vet bob
+app.get('/AllOwners', async (req, res) => {  // Selects all owners in the database
+
+  const owners = await Owner.findAll();   
+
+  res.json({
+    owners,
+  })
+
+});
+
+app.get('/KillBob', async (req, res) => { // Delete vet bob
 
   try {
     const Bob = await Vet.findOne({
@@ -271,7 +281,7 @@ app.get('/killBob', async (req, res) => { // Delete vet bob
 
 })
 
-app.get('/createBob', async (req, res) => { // Create vet bob
+app.get('/CreateBob', async (req, res) => { // Create vet bob
 
   try {
     const Bob = await Vet.create({

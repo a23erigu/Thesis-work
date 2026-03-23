@@ -270,7 +270,21 @@ app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, vo
         }
     });
 }); });
-app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/AllOwners', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var owners;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, Owner.findAll()];
+            case 1:
+                owners = _a.sent();
+                res.json({
+                    owners: owners,
+                });
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/KillBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var Bob, deletedBobSpecialty, deletedBob, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -310,7 +324,7 @@ app.get('/killBob', function (req, res) { return __awaiter(void 0, void 0, void 
         }
     });
 }); });
-app.get('/createBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var Bob, BobSpecialty, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
