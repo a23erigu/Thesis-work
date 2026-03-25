@@ -1,3 +1,4 @@
+import { Types } from 'mysql2';
 import { Sequelize, DataTypes, Model, json } from 'sequelize';
 const express = require('express');
 
@@ -252,6 +253,36 @@ app.get('/AllOwners', async (req, res) => {  // Selects all owners in the databa
   })
 
 });
+
+app.get('/AdvansedSelect', async (req, res) => {
+  try{
+    const advansedSelect = await Owner.findAll({
+      include: [{
+        model: Pet,
+        required: true,
+        include: [{
+          model: Visit,
+          required: true,
+        },
+        {
+          model: Type,
+          where: {
+            name: "hamster"
+          },
+          required: true,
+        }],
+      }]
+    });
+
+    res.json({
+      advansedSelect,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+  
+})
 
 app.get('/KillBob', async (req, res) => { // Delete vet bob
 

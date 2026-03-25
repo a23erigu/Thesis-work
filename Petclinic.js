@@ -292,8 +292,45 @@ app.get('/AllOwners', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
+app.get('/AdvansedSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var advansedSelect, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Owner.findAll({
+                        include: [{
+                                model: Pet,
+                                required: true,
+                                include: [{
+                                        model: Visit,
+                                        required: true,
+                                    },
+                                    {
+                                        model: Type,
+                                        where: {
+                                            name: "hamster"
+                                        },
+                                        required: true,
+                                    }],
+                            }]
+                    })];
+            case 1:
+                advansedSelect = _a.sent();
+                res.json({
+                    advansedSelect: advansedSelect,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 app.get('/KillBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, deletedBobSpecialty, deletedBob, err_1;
+    var Bob, deletedBobSpecialty, deletedBob, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -325,15 +362,15 @@ app.get('/KillBob', function (req, res) { return __awaiter(void 0, void 0, void 
                 });
                 return [3 /*break*/, 5];
             case 4:
-                err_1 = _a.sent();
-                console.log(err_1);
+                err_2 = _a.sent();
+                console.log(err_2);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, BobSpecialty, err_2;
+    var Bob, BobSpecialty, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -356,15 +393,15 @@ app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, voi
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_2 = _a.sent();
-                console.log(err_2);
+                err_3 = _a.sent();
+                console.log(err_3);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get('/UpdateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, SurgeryBob, err_3;
+    var Bob, SurgeryBob, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -390,15 +427,15 @@ app.get('/UpdateBob', function (req, res) { return __awaiter(void 0, void 0, voi
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_3 = _a.sent();
-                console.log(err_3);
+                err_4 = _a.sent();
+                console.log(err_4);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get('/CreatePet', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Newham, HamVisit, err_4;
+    var Newham, HamVisit, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -424,8 +461,8 @@ app.get('/CreatePet', function (req, res) { return __awaiter(void 0, void 0, voi
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_4 = _a.sent();
-                console.log(err_4);
+                err_5 = _a.sent();
+                console.log(err_5);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
