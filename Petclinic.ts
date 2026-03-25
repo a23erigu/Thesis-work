@@ -254,8 +254,30 @@ app.get('/AllOwners', async (req, res) => {  // Selects all owners in the databa
 
 });
 
-app.get('/AdvansedSelect', async (req, res) => {
-  try{
+app.get('/SimpleSelect', async (req, res) => {
+  try {
+    const simpleSelect = await Pet.findAll({
+      include: [{
+        model: Owner,
+        where : {
+          city: 'Madison',
+        },
+        required: true
+      }]
+    });
+    
+    res.json({
+      simpleSelect,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
+
+app.get('/AdvancedSelect', async (req, res) => {
+  try {
     const advansedSelect = await Owner.findAll({
       include: [{
         model: Pet,
@@ -282,7 +304,7 @@ app.get('/AdvansedSelect', async (req, res) => {
     console.log(err);
   }
   
-})
+});
 
 app.get('/KillBob', async (req, res) => { // Delete vet bob
 
