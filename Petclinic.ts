@@ -398,13 +398,13 @@ app.get('/CreatePet', async (req, res) => {
       birth_date: "2006-09-12",
       type_id: 6,
       owner_id: 6
-    })
+    });
 
     const HamVisit = await Visit.create({
       pet_id: Newham.get("id"),
       visit_date: "2006-09-14",
       description: "Birth check"
-    })
+    });
 
     res.json({
       Newham,
@@ -415,7 +415,52 @@ app.get('/CreatePet', async (req, res) => {
     console.log(err);
   }
 
-})
+});
+
+app.get('/SimpleCreate', async (req, res) => {
+  try {
+    const simpleCreate = await Owner.create({
+      first_name: "Deller",
+      last_name: "Menser",
+      address: "notwere st",
+      city: "Entier",
+      telephone: "0000666000",
+    })
+
+    res.json({
+      simpleCreate,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
+
+app.get('/SimpleDelete', async (req, res) => {
+  try {
+    const Deller = await Owner.findOne({
+      where: {
+        first_name: "Deller"
+      }
+    })
+
+    const simpleDelete = await Owner.destroy({
+      where: {
+        id: Deller?.get("id"),
+      }
+    })
+
+    res.json({
+      simpleDelete
+    })
+
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
 
 const PORT = 8090;    // the port used by the website
 

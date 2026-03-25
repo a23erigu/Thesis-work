@@ -497,6 +497,65 @@ app.get('/CreatePet', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
+app.get('/SimpleCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var simpleCreate, err_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Owner.create({
+                        first_name: "Deller",
+                        last_name: "Menser",
+                        address: "notwere st",
+                        city: "Entier",
+                        telephone: "0000666000",
+                    })];
+            case 1:
+                simpleCreate = _a.sent();
+                res.json({
+                    simpleCreate: simpleCreate,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_7 = _a.sent();
+                console.log(err_7);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var Deller, simpleDelete, err_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Owner.findOne({
+                        where: {
+                            first_name: "Deller"
+                        }
+                    })];
+            case 1:
+                Deller = _a.sent();
+                return [4 /*yield*/, Owner.destroy({
+                        where: {
+                            id: Deller === null || Deller === void 0 ? void 0 : Deller.get("id"),
+                        }
+                    })];
+            case 2:
+                simpleDelete = _a.sent();
+                res.json({
+                    simpleDelete: simpleDelete
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                err_8 = _a.sent();
+                console.log(err_8);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 var PORT = 8090; // the port used by the website
 app.listen(PORT, function () {
     console.log("Example app listening at http://localhost:".concat(PORT));
