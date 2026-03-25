@@ -141,7 +141,7 @@ Vet.belongsToMany(Specialty, { through: Vet_Specialty, foreignKey: "vet_id" });
 Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id" });
 // select everything
 app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var owners, types, pets, visits, vets, specialties, user3pets, petsFowner, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery;
+    var owners, types, pets, visits, vets, specialties, vet_specialties, user3pets, petsFowner, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Owner.findAll()];
@@ -162,12 +162,15 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, Specialty.findAll()];
             case 6:
                 specialties = _a.sent();
+                return [4 /*yield*/, Vet_Specialty.findAll()];
+            case 7:
+                vet_specialties = _a.sent();
                 return [4 /*yield*/, Pet.findAll({
                         where: {
                             owner_id: 3
                         }
                     })];
-            case 7:
+            case 8:
                 user3pets = _a.sent();
                 return [4 /*yield*/, Owner.findAll({
                         where: {
@@ -178,7 +181,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                                 required: true,
                             }]
                     })];
-            case 8:
+            case 9:
                 petsFowner = _a.sent();
                 return [4 /*yield*/, Pet.findAll({
                         include: [{
@@ -188,7 +191,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                                 }
                             }]
                     })];
-            case 9:
+            case 10:
                 petsFcity = _a.sent();
                 return [4 /*yield*/, Owner.findAll({
                         include: [{
@@ -200,14 +203,14 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                                     }]
                             }]
                     })];
-            case 10:
+            case 11:
                 ownerWpetWvisit = _a.sent();
                 return [4 /*yield*/, Vet_Specialty.findAll({
                         where: {
                             vet_id: 3
                         }
                     })];
-            case 11:
+            case 12:
                 vet3spec = _a.sent();
                 return [4 /*yield*/, Vet.findAll({
                         include: [{
@@ -216,7 +219,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                                 where: { name: "surgery" }
                             }]
                     })];
-            case 12:
+            case 13:
                 vetWsurgery = _a.sent();
                 res.json({
                     owners: owners,
@@ -224,6 +227,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     pets: pets,
                     visits: visits,
                     vets: vets,
+                    vet_specialties: vet_specialties,
                     specialties: specialties,
                     user3pets: user3pets,
                     petsFowner: petsFowner,
@@ -237,7 +241,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); });
 app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var owners, types, pets, visits, vets, specialties;
+    var owners, types, pets, visits, vets, specialties, vet_specialties;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Owner.findAll()];
@@ -258,6 +262,9 @@ app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, Specialty.findAll()];
             case 6:
                 specialties = _a.sent();
+                return [4 /*yield*/, Vet_Specialty.findAll()];
+            case 7:
+                vet_specialties = _a.sent();
                 res.json({
                     owners: owners,
                     types: types,
@@ -265,6 +272,7 @@ app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, vo
                     visits: visits,
                     vets: vets,
                     specialties: specialties,
+                    vet_specialties: vet_specialties
                 });
                 return [2 /*return*/];
         }
@@ -350,6 +358,74 @@ app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, voi
             case 3:
                 err_2 = _a.sent();
                 console.log(err_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/UpdateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var Bob, SurgeryBob, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Vet.findOne({
+                        where: {
+                            first_name: "Bob"
+                        }
+                    })];
+            case 1:
+                Bob = _a.sent();
+                return [4 /*yield*/, Vet_Specialty.update({
+                        specialty_id: 2
+                    }, {
+                        where: {
+                            vet_id: Bob === null || Bob === void 0 ? void 0 : Bob.get("id"),
+                        }
+                    })];
+            case 2:
+                SurgeryBob = _a.sent();
+                res.json({
+                    SurgeryBob: SurgeryBob
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                err_3 = _a.sent();
+                console.log(err_3);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/CreatePet', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var Newham, HamVisit, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Pet.create({
+                        name: "Ham",
+                        birth_date: "2006-09-12",
+                        type_id: 6,
+                        owner_id: 6
+                    })];
+            case 1:
+                Newham = _a.sent();
+                return [4 /*yield*/, Visit.create({
+                        pet_id: Newham.get("id"),
+                        visit_date: "2006-09-14",
+                        description: "Birth check"
+                    })];
+            case 2:
+                HamVisit = _a.sent();
+                res.json({
+                    Newham: Newham,
+                    HamVisit: HamVisit
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                err_4 = _a.sent();
+                console.log(err_4);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
