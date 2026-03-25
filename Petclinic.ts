@@ -425,7 +425,7 @@ app.get('/SimpleCreate', async (req, res) => {
       address: "notwere st",
       city: "Entier",
       telephone: "0000666000",
-    })
+    });
 
     res.json({
       simpleCreate,
@@ -443,18 +443,48 @@ app.get('/SimpleDelete', async (req, res) => {
       where: {
         first_name: "Deller"
       }
-    })
+    });
 
     const simpleDelete = await Owner.destroy({
       where: {
         id: Deller?.get("id"),
       }
-    })
+    });
 
     res.json({
       simpleDelete
     })
 
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
+
+app.get('/SimpleUpdate', async (req, res) => {
+  try {
+    const oldDeller = await Owner.findOne({
+      where: {
+        first_name: "Deller",
+        city: "Entier",
+      }
+    });
+    
+    const simpleUpdate = await Owner.update(
+      {
+        city: "Exiter"
+      },
+      {
+        where: {
+          id: oldDeller?.get("id")
+        }
+      }
+    );
+
+    res.json({
+      simpleUpdate
+    })
   }
   catch (err) {
     console.log(err);

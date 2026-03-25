@@ -556,6 +556,41 @@ app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, 
         }
     });
 }); });
+app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var oldDeller, simpleUpdate, err_9;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Owner.findOne({
+                        where: {
+                            first_name: "Deller",
+                            city: "Entier",
+                        }
+                    })];
+            case 1:
+                oldDeller = _a.sent();
+                return [4 /*yield*/, Owner.update({
+                        city: "Exiter"
+                    }, {
+                        where: {
+                            id: oldDeller === null || oldDeller === void 0 ? void 0 : oldDeller.get("id")
+                        }
+                    })];
+            case 2:
+                simpleUpdate = _a.sent();
+                res.json({
+                    simpleUpdate: simpleUpdate
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                err_9 = _a.sent();
+                console.log(err_9);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 var PORT = 8090; // the port used by the website
 app.listen(PORT, function () {
     console.log("Example app listening at http://localhost:".concat(PORT));
