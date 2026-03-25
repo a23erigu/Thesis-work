@@ -151,6 +151,7 @@ app.get('/', async (req, res) => {  // ignore these errors (just ts things)
   const visits = await Visit.findAll(); 
   const vets = await Vet.findAll();
   const specialties = await Specialty.findAll();
+  const vet_specialties = await Vet_Specialty.findAll();
 
   const user3pets = await Pet.findAll({   // all pets from owner with id 3
     where: {
@@ -208,6 +209,7 @@ app.get('/', async (req, res) => {  // ignore these errors (just ts things)
     pets,
     visits,
     vets,
+    vet_specialties,
     specialties,
     user3pets,
     petsFowner,
@@ -227,6 +229,7 @@ app.get('/AllElement', async (req, res) => {  // Selects all elements in the dat
   const visits = await Visit.findAll(); 
   const vets = await Vet.findAll();
   const specialties = await Specialty.findAll();
+  const vet_specialties = await Vet_Specialty.findAll();
 
   res.json({
     owners,
@@ -235,6 +238,7 @@ app.get('/AllElement', async (req, res) => {  // Selects all elements in the dat
     visits,
     vets,
     specialties,
+    vet_specialties
   })
 
 });
@@ -297,6 +301,61 @@ app.get('/CreateBob', async (req, res) => { // Create vet bob
     res.json({
       Bob,
       BobSpecialty
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+})
+
+app.get('/UpdateBob', async (req, res) => {
+
+  try {
+    const Bob = await Vet.findOne({
+      where: {
+        first_name: "Bob"
+      }
+    })
+
+    const SurgeryBob = await Vet_Specialty.update(
+      {
+        specialty_id: 2
+      },
+      {
+        where: {
+          vet_id: Bob?.get("id"),
+        }
+      }
+    )
+    res.json({
+      SurgeryBob
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+})
+
+app.get('/CreatePet', async (req, res) => {
+  try {
+    const Newham = await Pet.create({
+      name: "Ham",
+      birth_date: "2006-09-12",
+      type_id: 6,
+      owner_id: 6
+    })
+
+    const HamVisit = await Visit.create({
+      pet_id: Newham.get("id"),
+      visit_date: "2006-09-14",
+      description: "Birth check"
+    })
+
+    res.json({
+      Newham,
+      HamVisit
     })
   }
   catch (err) {
