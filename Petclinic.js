@@ -602,7 +602,7 @@ app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0
                         description: "rabis check",
                         Pet: {
                             name: "Blue",
-                            birth_day: "2007-05-03",
+                            birth_date: "2007-02-23",
                             type_id: 2,
                             Owner: {
                                 first_name: "Entre",
@@ -635,27 +635,57 @@ app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0
     });
 }); });
 app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var advancedDelete, err_11;
+    var Entre, Blue, advancedDelete1, advancedDelete2, advancedDelete3, err_11;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Visit.destroy({
+                _a.trys.push([0, 6, , 7]);
+                return [4 /*yield*/, Owner.findOne({
                         where: {
-                            pet_id: null
+                            first_name: "Entre",
                         }
                     })];
             case 1:
-                advancedDelete = _a.sent();
-                res.json({
-                    advancedDelete: advancedDelete
-                });
-                return [3 /*break*/, 3];
+                Entre = _a.sent();
+                return [4 /*yield*/, Pet.findOne({
+                        where: {
+                            owner_id: Entre === null || Entre === void 0 ? void 0 : Entre.get("id")
+                        }
+                    })];
             case 2:
+                Blue = _a.sent();
+                return [4 /*yield*/, Visit.destroy({
+                        where: {
+                            pet_id: Blue === null || Blue === void 0 ? void 0 : Blue.get("id")
+                        }
+                    })];
+            case 3:
+                advancedDelete1 = _a.sent();
+                return [4 /*yield*/, Pet.destroy({
+                        where: {
+                            id: Blue === null || Blue === void 0 ? void 0 : Blue.get("id")
+                        }
+                    })];
+            case 4:
+                advancedDelete2 = _a.sent();
+                return [4 /*yield*/, Owner.destroy({
+                        where: {
+                            id: Entre === null || Entre === void 0 ? void 0 : Entre.get("id")
+                        }
+                    })];
+            case 5:
+                advancedDelete3 = _a.sent();
+                res.json({
+                    advancedDelete1: advancedDelete1,
+                    advancedDelete2: advancedDelete2,
+                    advancedDelete3: advancedDelete3,
+                });
+                return [3 /*break*/, 7];
+            case 6:
                 err_11 = _a.sent();
                 console.log(err_11);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });

@@ -499,7 +499,7 @@ app.get('/AdvancedCreate', async (req, res) => {
         description: "rabis check",
         Pet: {
           name: "Blue",
-          birth_day: "2007-05-03",
+          birth_date: "2007-02-23",
           type_id: 2,
           Owner: {
             first_name: "Entre",
@@ -532,14 +532,41 @@ app.get('/AdvancedCreate', async (req, res) => {
 
 app.get('/AdvancedDelete', async (req, res) => {
   try {
-    const advancedDelete = await Visit.destroy({
+
+    const Entre = await Owner.findOne({
       where: {
-        pet_id: null
+        first_name: "Entre",
       }
-    })
+    });
+
+    const Blue = await Pet.findOne({
+      where: {
+        owner_id: Entre?.get("id")
+      }
+    });
+
+    const advancedDelete1 = await Visit.destroy({
+      where: {
+        pet_id: Blue?.get("id")
+      }
+    });
+
+    const advancedDelete2 = await Pet.destroy({
+      where: {
+        id: Blue?.get("id")
+      }
+    });
+
+    const advancedDelete3 = await Owner.destroy({
+      where: {
+        id: Entre?.get("id")
+      }
+    });
 
     res.json({
-      advancedDelete
+      advancedDelete1,
+      advancedDelete2,
+      advancedDelete3,
     })
   }
   catch (err) {
