@@ -1,5 +1,5 @@
 import { Types } from 'mysql2';
-import { Sequelize, DataTypes, Model, json } from 'sequelize';
+import { Sequelize, DataTypes, Model, json, Association } from 'sequelize';
 const express = require('express');
 
 const app = express();
@@ -77,8 +77,8 @@ const Pet = sequelize.define(
 
 Pet.belongsTo(Type, { foreignKey: "type_id" });
 Type.hasOne(Pet, { foreignKey: "type_id" });  
-Pet.belongsTo(Owner, { foreignKey: "owner_id" });
-Owner.hasMany(Pet, { foreignKey: "owner_id" });
+const PetWowner = Pet.belongsTo(Owner, { foreignKey: "owner_id" });
+const OwnerWpet = Owner.hasMany(Pet, { foreignKey: "owner_id" });
 
 const Visit = sequelize.define(
   'Visit',
@@ -97,8 +97,8 @@ const Visit = sequelize.define(
   },
 );
 
-Visit.belongsTo(Pet, { foreignKey: "pet_id"});
-Pet.hasMany(Visit, { foreignKey: "pet_id"});
+const VisitWpet = Visit.belongsTo(Pet, { foreignKey: "pet_id"});
+const PetWvisit = Pet.hasMany(Visit, { foreignKey: "pet_id"});
 
 const Vet = sequelize.define(               
   'Vet',
@@ -454,7 +454,6 @@ app.get('/SimpleDelete', async (req, res) => {
     res.json({
       simpleDelete
     })
-
   }
   catch (err) {
     console.log(err);
@@ -484,6 +483,63 @@ app.get('/SimpleUpdate', async (req, res) => {
 
     res.json({
       simpleUpdate
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
+
+app.get('/AdvancedCreate', async (req, res) => {
+  try {
+    const advancedCreate = await Visit.create(
+      {
+        visit_date: "2009-08-15",
+        description: "rabis check",
+        Pet: {
+          name: "Blue",
+          birth_day: "2007-05-03",
+          type_id: 2,
+          Owner: {
+            first_name: "Entre",
+            last_name: "Dublo",
+            address: "le trest avenue 5",
+            city: "Paris",
+            telephone: "0908234680",
+          }
+        },
+      },
+      {
+        include: [
+          {
+            association: VisitWpet,
+            include: [PetWowner],
+          },
+        ],
+      }
+    );
+
+    res.json({
+      advancedCreate,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+})
+
+app.get('/AdvancedDelete', async (req, res) => {
+  try {
+    const advancedDelete = await Visit.destroy({
+      where: {
+        pet_id: null
+      }
+    })
+
+    res.json({
+      advancedDelete
     })
   }
   catch (err) {

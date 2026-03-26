@@ -96,8 +96,8 @@ var Pet = sequelize.define('Pet', {
 });
 Pet.belongsTo(Type, { foreignKey: "type_id" });
 Type.hasOne(Pet, { foreignKey: "type_id" });
-Pet.belongsTo(Owner, { foreignKey: "owner_id" });
-Owner.hasMany(Pet, { foreignKey: "owner_id" });
+var PetWowner = Pet.belongsTo(Owner, { foreignKey: "owner_id" });
+var OwnerWpet = Owner.hasMany(Pet, { foreignKey: "owner_id" });
 var Visit = sequelize.define('Visit', {
     visit_date: {
         type: sequelize_1.DataTypes.DATE,
@@ -110,8 +110,8 @@ var Visit = sequelize.define('Visit', {
     tableName: 'visits',
     timestamps: false,
 });
-Visit.belongsTo(Pet, { foreignKey: "pet_id" });
-Pet.hasMany(Visit, { foreignKey: "pet_id" });
+var VisitWpet = Visit.belongsTo(Pet, { foreignKey: "pet_id" });
+var PetWvisit = Pet.hasMany(Visit, { foreignKey: "pet_id" });
 var Vet = sequelize.define('Vet', {
     first_name: {
         type: sequelize_1.DataTypes.STRING,
@@ -588,6 +588,74 @@ app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, 
                 console.log(err_9);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var advancedCreate, err_10;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Visit.create({
+                        visit_date: "2009-08-15",
+                        description: "rabis check",
+                        Pet: {
+                            name: "Blue",
+                            birth_day: "2007-05-03",
+                            type_id: 2,
+                            Owner: {
+                                first_name: "Entre",
+                                last_name: "Dublo",
+                                address: "le trest avenue 5",
+                                city: "Paris",
+                                telephone: "0908234680",
+                            }
+                        },
+                    }, {
+                        include: [
+                            {
+                                association: VisitWpet,
+                                include: [PetWowner],
+                            },
+                        ],
+                    })];
+            case 1:
+                advancedCreate = _a.sent();
+                res.json({
+                    advancedCreate: advancedCreate,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_10 = _a.sent();
+                console.log(err_10);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var advancedDelete, err_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Visit.destroy({
+                        where: {
+                            pet_id: null
+                        }
+                    })];
+            case 1:
+                advancedDelete = _a.sent();
+                res.json({
+                    advancedDelete: advancedDelete
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_11 = _a.sent();
+                console.log(err_11);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
