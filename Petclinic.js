@@ -52,6 +52,9 @@ try {
 catch (error) {
     console.error('Unable to connect to the database:', error);
 }
+/*-----------*\
+|   Classes   |
+\*-----------*/
 var Owner = sequelize.define('Owner', {
     first_name: {
         type: sequelize_1.DataTypes.STRING,
@@ -139,7 +142,9 @@ var Vet_Specialty = sequelize.define('Vet_Specialty', {}, {
 });
 Vet.belongsToMany(Specialty, { through: Vet_Specialty, foreignKey: "vet_id" });
 Specialty.belongsToMany(Vet, { through: Vet_Specialty, foreignKey: "specialty_id" });
-// select everything
+/*-----------------*\
+|   Start section   |
+\*-----------------*/
 app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var owners, types, pets, visits, vets, specialties, vet_specialties, user3pets, petsFowner, petsFcity, ownerWpetWvisit, vet3spec, vetWsurgery;
     return __generator(this, function (_a) {
@@ -240,6 +245,9 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); });
+/*----------------*\
+|   Show section   |
+\*----------------*/
 app.get('/AllElement', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var owners, types, pets, visits, vets, specialties, vet_specialties;
     return __generator(this, function (_a) {
@@ -292,74 +300,11 @@ app.get('/AllOwners', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
-app.get('/SimpleSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var simpleSelect, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Pet.findAll({
-                        include: [{
-                                model: Owner,
-                                where: {
-                                    city: 'Madison',
-                                },
-                                required: true
-                            }]
-                    })];
-            case 1:
-                simpleSelect = _a.sent();
-                res.json({
-                    simpleSelect: simpleSelect,
-                });
-                return [3 /*break*/, 3];
-            case 2:
-                err_1 = _a.sent();
-                console.log(err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-app.get('/AdvancedSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var advansedSelect, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Owner.findAll({
-                        include: [{
-                                model: Pet,
-                                required: true,
-                                include: [{
-                                        model: Visit,
-                                        required: true,
-                                    },
-                                    {
-                                        model: Type,
-                                        where: {
-                                            name: "hamster"
-                                        },
-                                        required: true,
-                                    }],
-                            }]
-                    })];
-            case 1:
-                advansedSelect = _a.sent();
-                res.json({
-                    advansedSelect: advansedSelect,
-                });
-                return [3 /*break*/, 3];
-            case 2:
-                err_2 = _a.sent();
-                console.log(err_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
+/*---------------*\
+|   Bob section   |
+\*---------------*/
 app.get('/KillBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, deletedBobSpecialty, deletedBob, err_3;
+    var Bob, deletedBobSpecialty, deletedBob, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -391,15 +336,15 @@ app.get('/KillBob', function (req, res) { return __awaiter(void 0, void 0, void 
                 });
                 return [3 /*break*/, 5];
             case 4:
-                err_3 = _a.sent();
-                console.log(err_3);
+                err_1 = _a.sent();
+                console.log(err_1);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, BobSpecialty, err_4;
+    var Bob, BobSpecialty, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -422,15 +367,15 @@ app.get('/CreateBob', function (req, res) { return __awaiter(void 0, void 0, voi
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_4 = _a.sent();
-                console.log(err_4);
+                err_2 = _a.sent();
+                console.log(err_2);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get('/UpdateBob', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Bob, SurgeryBob, err_5;
+    var Bob, SurgeryBob, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -456,49 +401,47 @@ app.get('/UpdateBob', function (req, res) { return __awaiter(void 0, void 0, voi
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_5 = _a.sent();
-                console.log(err_5);
+                err_3 = _a.sent();
+                console.log(err_3);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
-app.get('/CreatePet', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Newham, HamVisit, err_6;
+/*------------------*\
+|   Simple section   |
+\*------------------*/
+app.get('/SimpleSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var simpleSelect, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, Pet.create({
-                        name: "Ham",
-                        birth_date: "2006-09-12",
-                        type_id: 6,
-                        owner_id: 6
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Pet.findAll({
+                        include: [{
+                                model: Owner,
+                                where: {
+                                    city: 'Madison',
+                                },
+                                required: true
+                            }]
                     })];
             case 1:
-                Newham = _a.sent();
-                return [4 /*yield*/, Visit.create({
-                        pet_id: Newham.get("id"),
-                        visit_date: "2006-09-14",
-                        description: "Birth check"
-                    })];
-            case 2:
-                HamVisit = _a.sent();
+                simpleSelect = _a.sent();
                 res.json({
-                    Newham: Newham,
-                    HamVisit: HamVisit
+                    simpleSelect: simpleSelect,
                 });
-                return [3 /*break*/, 4];
-            case 3:
-                err_6 = _a.sent();
-                console.log(err_6);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                console.log(err_4);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/SimpleCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var simpleCreate, err_7;
+    var simpleCreate, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -517,15 +460,15 @@ app.get('/SimpleCreate', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 3];
             case 2:
-                err_7 = _a.sent();
-                console.log(err_7);
+                err_5 = _a.sent();
+                console.log(err_5);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Deller, simpleDelete, err_8;
+    var Deller, simpleDelete, err_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -549,15 +492,15 @@ app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_8 = _a.sent();
-                console.log(err_8);
+                err_6 = _a.sent();
+                console.log(err_6);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var oldDeller, simpleUpdate, err_9;
+    var oldDeller, simpleUpdate, err_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -584,15 +527,55 @@ app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_9 = _a.sent();
-                console.log(err_9);
+                err_7 = _a.sent();
+                console.log(err_7);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
+/*--------------------*\
+|   Advanced section   |
+\*--------------------*/
+app.get('/AdvancedSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var advansedSelect, err_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Owner.findAll({
+                        include: [{
+                                model: Pet,
+                                required: true,
+                                include: [{
+                                        model: Visit,
+                                        required: true,
+                                    },
+                                    {
+                                        model: Type,
+                                        where: {
+                                            name: "hamster"
+                                        },
+                                        required: true,
+                                    }],
+                            }]
+                    })];
+            case 1:
+                advansedSelect = _a.sent();
+                res.json({
+                    advansedSelect: advansedSelect,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_8 = _a.sent();
+                console.log(err_8);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var advancedCreate, err_10;
+    var advancedCreate, err_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -627,15 +610,15 @@ app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0
                 });
                 return [3 /*break*/, 3];
             case 2:
-                err_10 = _a.sent();
-                console.log(err_10);
+                err_9 = _a.sent();
+                console.log(err_9);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Entre, Blue, advancedDelete1, advancedDelete2, advancedDelete3, err_11;
+    var Entre, Blue, advancedDelete1, advancedDelete2, advancedDelete3, err_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -682,11 +665,21 @@ app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0
                 });
                 return [3 /*break*/, 7];
             case 6:
-                err_11 = _a.sent();
-                console.log(err_11);
+                err_10 = _a.sent();
+                console.log(err_10);
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
         }
+    });
+}); });
+app.get('/AdvancedUpdate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+        }
+        catch (err) {
+            console.log(err);
+        }
+        return [2 /*return*/];
     });
 }); });
 var PORT = 8090; // the port used by the website

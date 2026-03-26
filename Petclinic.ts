@@ -18,6 +18,10 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 
+/*-----------*\
+|   Classes   |
+\*-----------*/
+
 const Owner = sequelize.define(
   'Owner',
   {
@@ -143,7 +147,10 @@ const Vet_Specialty = sequelize.define(
 Vet.belongsToMany(Specialty, {through: Vet_Specialty, foreignKey: "vet_id"});          
 Specialty.belongsToMany(Vet, {through: Vet_Specialty, foreignKey: "specialty_id"});    
 
-// select everything
+/*-----------------*\
+|   Start section   |
+\*-----------------*/
+
 app.get('/', async (req, res) => {  // ignore these errors (just ts things)
 
   const owners = await Owner.findAll();   // selects all elements in the database
@@ -222,6 +229,10 @@ app.get('/', async (req, res) => {  // ignore these errors (just ts things)
 
 });
 
+/*----------------*\
+|   Show section   |
+\*----------------*/
+
 app.get('/AllElement', async (req, res) => {  // Selects all elements in the database
 
   const owners = await Owner.findAll();   
@@ -254,57 +265,9 @@ app.get('/AllOwners', async (req, res) => {  // Selects all owners in the databa
 
 });
 
-app.get('/SimpleSelect', async (req, res) => {
-  try {
-    const simpleSelect = await Pet.findAll({
-      include: [{
-        model: Owner,
-        where : {
-          city: 'Madison',
-        },
-        required: true
-      }]
-    });
-    
-    res.json({
-      simpleSelect,
-    })
-  }
-  catch (err) {
-    console.log(err);
-  }
-
-});
-
-app.get('/AdvancedSelect', async (req, res) => {
-  try {
-    const advansedSelect = await Owner.findAll({
-      include: [{
-        model: Pet,
-        required: true,
-        include: [{
-          model: Visit,
-          required: true,
-        },
-        {
-          model: Type,
-          where: {
-            name: "hamster"
-          },
-          required: true,
-        }],
-      }]
-    });
-
-    res.json({
-      advansedSelect,
-    })
-  }
-  catch (err) {
-    console.log(err);
-  }
-  
-});
+/*---------------*\
+|   Bob section   |
+\*---------------*/
 
 app.get('/KillBob', async (req, res) => { // Delete vet bob
 
@@ -362,7 +325,7 @@ app.get('/CreateBob', async (req, res) => { // Create vet bob
 
 })
 
-app.get('/UpdateBob', async (req, res) => {
+app.get('/UpdateBob', async (req, res) => {   // Update vet Bob
 
   try {
     const Bob = await Vet.findOne({
@@ -391,24 +354,24 @@ app.get('/UpdateBob', async (req, res) => {
 
 })
 
-app.get('/CreatePet', async (req, res) => {
+/*------------------*\
+|   Simple section   |
+\*------------------*/
+
+app.get('/SimpleSelect', async (req, res) => {    // Get every pet from "Madison"
   try {
-    const Newham = await Pet.create({
-      name: "Ham",
-      birth_date: "2006-09-12",
-      type_id: 6,
-      owner_id: 6
+    const simpleSelect = await Pet.findAll({
+      include: [{
+        model: Owner,
+        where : {
+          city: 'Madison',
+        },
+        required: true
+      }]
     });
-
-    const HamVisit = await Visit.create({
-      pet_id: Newham.get("id"),
-      visit_date: "2006-09-14",
-      description: "Birth check"
-    });
-
+    
     res.json({
-      Newham,
-      HamVisit
+      simpleSelect,
     })
   }
   catch (err) {
@@ -417,7 +380,7 @@ app.get('/CreatePet', async (req, res) => {
 
 });
 
-app.get('/SimpleCreate', async (req, res) => {
+app.get('/SimpleCreate', async (req, res) => {    // Create owner "Deller"
   try {
     const simpleCreate = await Owner.create({
       first_name: "Deller",
@@ -437,7 +400,7 @@ app.get('/SimpleCreate', async (req, res) => {
 
 });
 
-app.get('/SimpleDelete', async (req, res) => {
+app.get('/SimpleDelete', async (req, res) => {    // Delete the first owner called "Deller"
   try {
     const Deller = await Owner.findOne({
       where: {
@@ -461,7 +424,7 @@ app.get('/SimpleDelete', async (req, res) => {
 
 });
 
-app.get('/SimpleUpdate', async (req, res) => {
+app.get('/SimpleUpdate', async (req, res) => {    // Update the city of the first owner called "Deller"
   try {
     const oldDeller = await Owner.findOne({
       where: {
@@ -491,7 +454,41 @@ app.get('/SimpleUpdate', async (req, res) => {
 
 });
 
-app.get('/AdvancedCreate', async (req, res) => {
+/*--------------------*\
+|   Advanced section   |
+\*--------------------*/
+
+app.get('/AdvancedSelect', async (req, res) => {    // Select all owners who have a hamster that has had a visit
+  try {
+    const advansedSelect = await Owner.findAll({
+      include: [{
+        model: Pet,
+        required: true,
+        include: [{
+          model: Visit,
+          required: true,
+        },
+        {
+          model: Type,
+          where: {
+            name: "hamster"
+          },
+          required: true,
+        }],
+      }]
+    });
+
+    res.json({
+      advansedSelect,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+  
+});
+
+app.get('/AdvancedCreate', async (req, res) => {    // Creates the owner "Entre", there dog "Blue" and a visit for Blue
   try {
     const advancedCreate = await Visit.create(
       {
@@ -528,9 +525,9 @@ app.get('/AdvancedCreate', async (req, res) => {
     console.log(err);
   }
 
-})
+});
 
-app.get('/AdvancedDelete', async (req, res) => {
+app.get('/AdvancedDelete', async (req, res) => {    // Delete the owner "Entre", there dog "Blue" and the visit for Blue
   try {
 
     const Entre = await Owner.findOne({
@@ -568,6 +565,16 @@ app.get('/AdvancedDelete', async (req, res) => {
       advancedDelete2,
       advancedDelete3,
     })
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+});
+
+app.get('/AdvancedUpdate', async (req, res) => { // don't know what do about this one
+  try {
+
   }
   catch (err) {
     console.log(err);
