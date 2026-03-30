@@ -265,6 +265,16 @@ app.get('/AllOwners', async (req, res) => {  // Selects all owners in the databa
 
 });
 
+app.get('/AllOwners/Pure', async (req, res) => {  // Selects all owners in the database with pure sql
+
+  const [results, metadata] = await sequelize.query('SELECT * FROM owners') 
+
+  res.json({
+    results,
+  })
+
+});
+
 /*---------------*\
 |   Bob section   |
 \*---------------*/
@@ -379,6 +389,19 @@ app.get('/SimpleSelect', async (req, res) => {    // Get every pet from "Madison
   }
 
 });
+
+app.get('/SimpleSelect/Pure', async (req, res) => {
+  try {
+    const [results, metadata] = await sequelize.query("SELECT Pets.id, Pets.name, Pets.birth_date, Pets.type_id, Pets.owner_id, Owners.city FROM Pets JOIN Owners ON pets.owner_id = Owners.id WHERE Owners.city = 'Madison'") // 
+
+    res.json({
+      results,
+    })
+  }
+  catch (err) {
+    console.log(err);
+  }
+})
 
 app.get('/SimpleCreate', async (req, res) => {    // Create owner "Deller"
   try {

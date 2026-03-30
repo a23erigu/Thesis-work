@@ -300,6 +300,20 @@ app.get('/AllOwners', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
+app.get('/AllOwners/Pure', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, results, metadata;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, sequelize.query('SELECT * FROM owners')];
+            case 1:
+                _a = _b.sent(), results = _a[0], metadata = _a[1];
+                res.json({
+                    results: results,
+                });
+                return [2 /*return*/];
+        }
+    });
+}); });
 /*---------------*\
 |   Bob section   |
 \*---------------*/
@@ -440,8 +454,30 @@ app.get('/SimpleSelect', function (req, res) { return __awaiter(void 0, void 0, 
         }
     });
 }); });
+app.get('/SimpleSelect/Pure', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, results, metadata, err_5;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, sequelize.query("SELECT Pets.id, Pets.name, Pets.birth_date, Pets.type_id, Pets.owner_id, Owners.city FROM Pets JOIN Owners ON pets.owner_id = Owners.id WHERE Owners.city = 'Madison'")]; // 
+            case 1:
+                _a = _b.sent() // 
+                , results = _a[0], metadata = _a[1];
+                res.json({
+                    results: results,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                err_5 = _b.sent();
+                console.log(err_5);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 app.get('/SimpleCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var simpleCreate, err_5;
+    var simpleCreate, err_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -460,15 +496,15 @@ app.get('/SimpleCreate', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 3];
             case 2:
-                err_5 = _a.sent();
-                console.log(err_5);
+                err_6 = _a.sent();
+                console.log(err_6);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Deller, simpleDelete, err_6;
+    var Deller, simpleDelete, err_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -492,15 +528,15 @@ app.get('/SimpleDelete', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_6 = _a.sent();
-                console.log(err_6);
+                err_7 = _a.sent();
+                console.log(err_7);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var oldDeller, simpleUpdate, err_7;
+    var oldDeller, simpleUpdate, err_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -527,8 +563,8 @@ app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, 
                 });
                 return [3 /*break*/, 4];
             case 3:
-                err_7 = _a.sent();
-                console.log(err_7);
+                err_8 = _a.sent();
+                console.log(err_8);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -538,7 +574,7 @@ app.get('/SimpleUpdate', function (req, res) { return __awaiter(void 0, void 0, 
 |   Advanced section   |
 \*--------------------*/
 app.get('/AdvancedSelect', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var advansedSelect, err_8;
+    var advansedSelect, err_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -567,15 +603,15 @@ app.get('/AdvancedSelect', function (req, res) { return __awaiter(void 0, void 0
                 });
                 return [3 /*break*/, 3];
             case 2:
-                err_8 = _a.sent();
-                console.log(err_8);
+                err_9 = _a.sent();
+                console.log(err_9);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var advancedCreate, err_9;
+    var advancedCreate, err_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -610,15 +646,15 @@ app.get('/AdvancedCreate', function (req, res) { return __awaiter(void 0, void 0
                 });
                 return [3 /*break*/, 3];
             case 2:
-                err_9 = _a.sent();
-                console.log(err_9);
+                err_10 = _a.sent();
+                console.log(err_10);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Entre, Blue, advancedDelete1, advancedDelete2, advancedDelete3, err_10;
+    var Entre, Blue, advancedDelete1, advancedDelete2, advancedDelete3, err_11;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -665,8 +701,8 @@ app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0
                 });
                 return [3 /*break*/, 7];
             case 6:
-                err_10 = _a.sent();
-                console.log(err_10);
+                err_11 = _a.sent();
+                console.log(err_11);
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
         }
