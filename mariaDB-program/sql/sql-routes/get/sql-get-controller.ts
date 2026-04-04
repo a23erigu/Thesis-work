@@ -1,0 +1,38 @@
+import pool from "../../sql-db-MariaDB"
+import { Request, Response } from "express";
+
+export const sqlGetSimple = async (req: Request, res: Response) => {
+    let conn;
+    try{
+        conn = await pool.getConnection();
+
+        const query = await conn.query('SELECT * FROM pets');
+
+        res.json(query);
+    } catch(e){
+        console.log(`Could not get simple SQL data, error: ${e}`);
+    } finally{
+        if(conn){
+            conn.release();
+        }
+    }
+}
+
+export const sqlGetAdvanced = async (req: Request, res: Response) => {
+    let conn;
+    try{
+        conn = await pool.getConnection();
+
+        const query = await conn.query(`SELECT pets.name, visits.description, owners.first_name FROM pets 
+            LEFT JOIN visits ON pets.id = visits.pet_id 
+            INNER JOIN owners ON pets.owner_id = owners.id WHERE city = 'Monona'`);
+
+        res.json(query);
+    } catch(e){
+        console.log(`Could not get advanced SQL data, error: ${e}`);
+    } finally{
+        if(conn){
+            conn.release();
+        }
+    }
+}
