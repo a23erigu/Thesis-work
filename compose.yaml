@@ -5,7 +5,43 @@ services:
       - '8090:8090'
     networks:
       - backend-network
+
+  backend:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    depends_on:
+      - database-mariadb
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - database-mariadb
+  
+  database-mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_DATABASE: petclinic
+    ports:
+    - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./db-files:/docker-entrypoint-initdb.d
       
 networks:
   backend-network:
     external: true
+  prisma-network:
+
+volumes:
+  mariadb_data:
