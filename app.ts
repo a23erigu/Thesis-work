@@ -6,7 +6,12 @@ const process = require('process');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.MDB_APP_PORT || 5000;
+const PORT = process.env.PORT || 5000;
+
+app.use(express.json());
+
+app.use('/prisma/get', require('./mariaDB-program/prisma/prisma-routes/get/prisma-get-routes'));
+app.use('/sql/get', require('./mariaDB-program/sql/sql-routes/get/sql-get-routes'));
 
 app.get('/', async(req, res) => {
     res.send("<H1> Server is working <H1>")
@@ -14,6 +19,9 @@ app.get('/', async(req, res) => {
 
 app.listen(PORT, () => {
     console.log(
-        `Listening on port ${PORT}, process ID: ` + process.pid + ` process name: ` + process.title
+        // PID & PPath might not work on windows
+        `Listening on port: ${PORT}, \n
+        process ID: ${process.pid}, \n
+        process path: ${process.title}`
     );
 });
