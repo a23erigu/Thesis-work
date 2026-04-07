@@ -31,6 +31,11 @@ newman.run({
     }
 }
 }).on('request', (e: Error | null, args: any) => {
+    if(!collection.includes("SQL") && !collection.includes("Prisma") && !collection.includes("Sequelize")){
+        console.error("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
+        process.exit();
+    }
+
     if(e){
         console.error("Request failed: ", e);
         return;
@@ -46,16 +51,20 @@ newman.run({
     results.push(args.response.responseTime)
 
 }).on('done', () => {
-    let dateTime = new Date();
+    const dateTime = new Date();
+    const hours = String(dateTime.getHours()).padStart(2, '0');
+    const minutes = String(dateTime.getMinutes()).padStart(2, '0');
+    const seconds = String(dateTime.getSeconds()).padStart(2, '0');
+    const cleanTime = `${hours} - ${minutes} - ${seconds}`
 
     if(collection.includes("SQL")){
-        fs.writeFileSync(dir+`/response-times-sql.json - ${dateTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-sql.json - ${cleanTime}`, JSON.stringify(results, null, 2));
     } else if(collection.includes("Prisma")){
-        fs.writeFileSync(dir+`/response-times-prisma.json - ${dateTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-prisma.json - ${cleanTime}`, JSON.stringify(results, null, 2));
     } else if(collection.includes("Sequelize")){
-        fs.writeFileSync(dir+`/response-times-sequelize.json - ${dateTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-sequelize.json - ${cleanTime}`, JSON.stringify(results, null, 2));
     } else{
-        console.log("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
+        console.error("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
     }
 
     console.log(`Test completed, report created in directory: ${dir}`);
