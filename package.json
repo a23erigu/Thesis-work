@@ -8,7 +8,7 @@
   "main": "Petclinic.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Petclinic.js",
+    "start": "node sequelize-ORM/Petclinic.js",
     "dev": "tsx watch --env-file=.env app.ts"
   },
   "dependencies": {
