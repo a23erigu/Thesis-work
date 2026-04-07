@@ -711,6 +711,7 @@ app.get('/AdvancedDelete', function (req, res) { return __awaiter(void 0, void 0
 app.get('/AdvancedUpdate', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
+            console.log("this is a test");
         }
         catch (err) {
             console.log(err);
