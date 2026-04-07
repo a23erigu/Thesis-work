@@ -58,5 +58,5 @@ newman.run({
         console.log("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
     }
 
-    console.log("Test completed");
+    console.log(`Test completed, report created in directory: ${dir}`);
 })
