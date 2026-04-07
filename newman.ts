@@ -55,14 +55,14 @@ newman.run({
     const hours = String(dateTime.getHours()).padStart(2, '0');
     const minutes = String(dateTime.getMinutes()).padStart(2, '0');
     const seconds = String(dateTime.getSeconds()).padStart(2, '0');
-    const cleanTime = `${hours} - ${minutes} - ${seconds}`
+    const cleanTime = `${hours}-${minutes}-${seconds}`
 
     if(collection.includes("SQL")){
-        fs.writeFileSync(dir+`/response-times-sql.json - ${cleanTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-sql-${cleanTime}.json`, JSON.stringify(results, null, 2));
     } else if(collection.includes("Prisma")){
-        fs.writeFileSync(dir+`/response-times-prisma.json - ${cleanTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-prisma.json-${cleanTime}.json`, JSON.stringify(results, null, 2));
     } else if(collection.includes("Sequelize")){
-        fs.writeFileSync(dir+`/response-times-sequelize.json - ${cleanTime}`, JSON.stringify(results, null, 2));
+        fs.writeFileSync(dir+`/response-times-sequelize.json-${cleanTime}.json`, JSON.stringify(results, null, 2));
     } else{
         console.error("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
     }
