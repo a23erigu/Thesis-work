@@ -597,7 +597,7 @@ app.get('/AdvancedDelete', async (req, res) => {    // Delete the owner "Entre",
 
 app.get('/AdvancedUpdate', async (req, res) => { // don't know what do about this one
   try {
-
+    console.log("this is a test");
   }
   catch (err) {
     console.log(err);
