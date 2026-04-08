@@ -5,11 +5,11 @@
   "license": "ISC",
   "author": "Erik",
   "type": "commonjs",
-  "main": "Petclinic.js",
+  "main": "Petclinic.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --expose-gc sequelize-ORM/Petclinic.js",
-    "dev": "tsx --expose-gc --env-file=.env app.ts"
+    "start": "npx --expose-gc tsx Postgres-app.ts",
+    "dev": "tsx --expose-gc watch --env-file=.env app.ts"
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.6.0",

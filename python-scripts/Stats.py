@@ -7,20 +7,19 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 import statsmodels.stats.api as sm
 
-ORM = "Sequelize"       # Swaps what ORM is being used
+ORM = "Sequelize"       # Decides what ORM is being used
+Title = "All Owners"        # Decides the title
 
 def extract_newman_times(filename):
     with open(filename, 'r') as f:
         data = json.load(f)
 
-    #executions = data["run"]["executions"]
+    times_list = [ex["responseTime"] for ex in data]
 
-    #times_list = [ex["response"]["responseTime"] for ex in executions if "response" in ex]
+    return times_list
 
-    return data
-
-orm_times = extract_newman_times("response-times-sequelize.json")
-sql_times = extract_newman_times("response-times-sql.json")
+orm_times = extract_newman_times("response-times-Sequelize_AllOwners.postman_collection.json-101-14-53-52.json")
+sql_times = extract_newman_times("response-times-SQL_AllOwners.postman_collection.json-101-14-55-41.json")
 
 mean_orm = mean(orm_times)
 mean_sql = mean(sql_times)
@@ -42,7 +41,7 @@ plt.bar(engines, average, color=['#2E5F7F', '#D87741'], alpha=1)
 
 plt.ylim(bottom=0, top=5)
 
-plt.title('All pets from city (advanced)')
+plt.title(Title)
 plt.ylabel('Mean response times(ms)')
 plt.xlabel('Engine')
 
