@@ -2,7 +2,6 @@ import newman from "newman";
 import * as fs from 'fs';
 import path from 'path';
 import { MemoryUsageChecker } from "./memory_usage";
-import { json } from "sequelize";
 
 const collection = process.argv[2]
 const iterations = parseInt(process.argv[3], 10) || 1;
@@ -31,7 +30,7 @@ function ValidateOutput(){
 
         const collectionName = path.basename(collection);
         
-        output = path.join(dir+`/response-times-${collectionName}-${iterations}-${cleanTime}.json`);
+        output = path.join(dir+`/report-${collectionName}-${iterations - 1}-${cleanTime}.json`);
     }
 }
 
@@ -39,32 +38,63 @@ createDir();
 ValidateOutput();
 
 interface Results {
+    iteration: number;
     responseTime: number;
+    memoryUse?: number;
 }
 
 const results: Results[] = [];
+let requestCounter = 0;
 
-memoryReader.clearMemoryUsage();
+async function Run(){
+    await memoryReader.clearMemoryUsage();
+    
+    newman.run({
+        collection: collection,
+        iterationCount: iterations,
+    }).on('request', (e: Error | null, args: any) => {
+        if(e){
+            console.error("Request failed: ", e);
+            return;
+        }
+        
+        const firstRequest = args.cursor.iteration === 0 && args.cursor.position === 0;
+        
+        if(firstRequest){
+            console.log("Running collection and dropping first request...");
+            return;
+        }
+        
+        results.push({
+            iteration: requestCounter++,
+            responseTime: args.response.responseTime
+        });
+        
+    }).on('done', async () => {
+        console.log(`Test completed, reading memory file...`);
+        
+        const memoryReadings = await memoryReader.getTotalMemoryUsage();
 
-newman.run({
-    collection: collection,
-    iterationCount: iterations,
-}).on('request', (e: Error | null, args: any) => {
-    if(e){
-        console.error("Request failed: ", e);
-        return;
-    }
+        if(memoryReadings.length !== iterations){
+            console.error("Incorrect amount of memory reads");
+            process.exit();
+        }
 
-    const firstRequest = args.cursor.iteration === 0 && args.cursor.position === 0;
+        const allResults = results.map((results, index) => {
+            return{
+                ...results,
+                memoryUse: memoryReadings[index + 1] || null
+            };
+        });
+        
+        if(allResults){
+            fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
+            console.log(`Test completed, created report: ${output}`);
+        } else{
+            console.error("Could not get memory from test");
+            process.exit();
+        }
+    })
+}
 
-    if(firstRequest){
-        console.log("Running collection and dropping first request...");
-        return;
-    }
-
-    results.push({responseTime: args.response.responseTime});
-
-}).on('done', () => {
-    fs.writeFileSync(output, JSON.stringify(results, null, 2));
-    console.log(`Test completed, report ${output} created in directory: ${dir}`);
-})
+Run();
