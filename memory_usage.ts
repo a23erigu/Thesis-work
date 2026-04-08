@@ -6,8 +6,6 @@ export class MemoryUsageChecker{
     private fileName = path.join(__dirname, 'memoryReadings.txt');
 
     public initialize(){
-        this.createDir();
-
         console.log(`target file: ${this.fileName}`);
 
         if(!global.gc){
@@ -26,10 +24,13 @@ export class MemoryUsageChecker{
         }
     }
 
-    private createDir(){
+    public createFile(){
         if(!fss.existsSync(this.fileName)){
-            console.log(`file ${this.fileName} does not exist, creating...`);
-            fss.mkdirSync(this.fileName);
+            console.log(`Directory ${this.fileName} does not exist, creating...`);
+            fss.open(this.fileName, 'w', function(e){
+                if(e) console.log("Could not create file: ", e);
+                else console.log("Create file");
+            });
         }
     }
 

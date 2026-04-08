@@ -9,11 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const memoryChecker = new MemoryUsageChecker;
-
 const memoryTracker = memoryChecker.initialize();
+
+memoryChecker.createFile();
 
 app.use(express.json());
 
+// Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
     res.on('finish', () => {
         const url = req.originalUrl.toLocaleLowerCase();
