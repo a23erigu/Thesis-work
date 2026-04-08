@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "Erik",
   "type": "commonjs",
-  "main": "Petclinic.js",
+  "main": "Petclinic.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node sequelize-ORM/Petclinic.js",
+    "start": "npx tsx Postgres-app.ts",
     "dev": "tsx watch --env-file=.env app.ts"
   },
   "dependencies": {
