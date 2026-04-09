@@ -16,7 +16,9 @@ app.use(express.json());
 // Memory tracker middleware (memory check after request is sent)
 app.use((req, res, next) => {
     res.on('finish', () => {
-        memoryTracker();
+        memoryTracker().catch(e => {
+            console.error("An error has occured", e);
+        });
     });
     next();
 });
