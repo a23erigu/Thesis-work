@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MemoryUsageChecker } from './memory_usage'
+import { MemoryUsageChecker } from './memory-usage'
 
 const process = require('process');
 
@@ -18,16 +18,12 @@ app.use(express.json());
 // Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
     res.on('finish', () => {
-        const url = req.originalUrl.toLocaleLowerCase();
-
-        if(url.includes("prisma") || url.includes("sql")){
-            memoryTracker();
-        }
+        memoryTracker();
     });
     next();
 });
 
-// Establish endpoints (put request endpoints here to test in browser)
+// Establish endpoints (put request endpoints here)
 app.use('/prisma/get', require('./mariaDB-program/prisma/prisma-routes/get/prisma-get-routes'));
 app.use('/sql/get', require('./mariaDB-program/sql/sql-routes/get/sql-get-routes'));
 

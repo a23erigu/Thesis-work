@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MemoryUsageChecker } from './memory_usage'
+import { MemoryUsageChecker } from './memory-usage'
 
 dotenv.config();
 
@@ -16,11 +16,7 @@ app.use(express.json());
 // Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
     res.on('finish', () => {
-        const url = req.originalUrl.toLocaleLowerCase();
-
-        if(url.includes("sequelize") || url.includes("sql")){
-            memoryTracker();
-        }
+        memoryTracker();
     });
     next();
 });

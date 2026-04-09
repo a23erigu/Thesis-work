@@ -1,7 +1,7 @@
 import newman from "newman";
 import * as fs from 'fs';
 import path from 'path';
-import { MemoryUsageChecker } from "./memory_usage";
+import { MemoryUsageChecker } from "./memory-usage";
 
 const collection = process.argv[2]
 const iterations = parseInt(process.argv[3], 10) || 1;

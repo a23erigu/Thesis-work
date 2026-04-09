@@ -24,6 +24,8 @@ export class MemoryUsageChecker{
         return async () => {
             const reading = this.getMemoryUsage() - init;
 
+            global.gc?.()
+
             await this.appendToFile(reading);
         }
     }
