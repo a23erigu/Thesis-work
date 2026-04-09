@@ -52,7 +52,7 @@ export class MemoryUsageChecker{
     private appendToFile(reading: number){
         try{
             fs.appendFile(this.fileName, `${reading.toFixed(3)},`);
-            console.log(`Added ${reading} to file`);
+            console.log(`Added ${reading} to ${this.fileName}`);
         } catch(e){
             console.error(`Could not write ${reading} to ${this.fileName}`);
         }

@@ -8,7 +8,7 @@
   "main": "Petclinic.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx --expose-gc tsx Postgres-app.ts",
+    "start": "npx tsx --expose-gc Postgres-app.ts",
     "dev": "tsx --expose-gc --env-file=.env Prisma-app.ts"
   },
   "dependencies": {
