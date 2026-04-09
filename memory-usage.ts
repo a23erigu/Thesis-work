@@ -3,11 +3,14 @@ import * as fss from 'fs'
 import * as path from 'path'
 
 export class MemoryUsageChecker{
-    private fileName = path.join(process.cwd(), 'memoryReadings.txt');
+    private file = path.join(process.cwd(), 'memoryReadings.txt');
+    private baseLine = 0;
 
     // Initalizer function to ensure the program is running correctly with all prerequisites
     public initialize(){
-        console.log(`target file: ${this.fileName}`);
+        this.createFile();
+
+        console.log(`target file: ${this.file}`);
 
         // Check if explicit gargabe collector is enabled
         if(!global.gc){
@@ -15,28 +18,31 @@ export class MemoryUsageChecker{
             process.exit();
         } else {
             console.log("Garbage collector enabled!");
+            global.gc?.()
         }
-
-        // Get memory usage at start to compare with after request is finished
-        const init = this.getMemoryUsage();
 
         // Return the memory usage after request and add to memoryReadings.txt file
         return () => {
-            const reading = this.getMemoryUsage() - init;
-
-            global.gc?.()
+            const reading = this.getMemoryUsage() - this.baseLine;
 
             this.appendToFile(reading);
         }
     }
 
+    public setBaseLine(){
+        global.gc?.();
+        console.log("Garbage collector run");
+
+        this.baseLine = this.getMemoryUsage();
+    }
+
     // Create the memory logging file if it doesn't exist
     public createFile(){
-        if(!fss.existsSync(this.fileName)){
-            console.log(`file ${this.fileName} does not exist, creating...`);
+        if(!fss.existsSync(this.file)){
+            console.log(`file ${this.file} does not exist, creating...`);
             try{
-                fss.writeFileSync(this.fileName, '');;
-                console.log(`created file: ${this.fileName}`);
+                fss.writeFileSync(this.file, '');
+                console.log(`created file: ${this.file}`);
             } catch(e){
                 console.error("Could not create file", e);
             }
@@ -45,16 +51,15 @@ export class MemoryUsageChecker{
 
     // Clear the file contents so that they don't spill over to the next measurement
     public async clearMemoryUsage(){
-        await fs.writeFile(this.fileName, '');
+        await fs.writeFile(this.file, '');
     }
 
     // Add the reading to the file with 3 decimal points
     private appendToFile(reading: number){
         try{
-            fss.appendFileSync(this.fileName, `${reading.toFixed(3)},`);
-            console.log(`Added ${reading} to ${this.fileName}`);
+            fs.appendFile(this.file, `${reading.toFixed(3)},`);
         } catch(e){
-            console.error(`Could not write ${reading} to ${this.fileName}`);
+            console.error(`Could not write ${reading} to ${this.file}`);
         }
     }
 
@@ -69,7 +74,7 @@ export class MemoryUsageChecker{
     // Get every memory reading made during a test and map it to each request in newman.ts
     public async getTotalMemoryUsage(): Promise<Number[]>{
         try{
-            const data = await fs.readFile(this.fileName, 'utf-8');
+            const data = await fs.readFile(this.file, 'utf-8');
 
             const memArray = data.split(',').filter(val => val.trim() !== '');
 

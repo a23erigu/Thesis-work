@@ -2,23 +2,26 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { MemoryUsageChecker } from './memory-usage'
 
-const process = require('process');
-
 dotenv.config();
 
+const process = require('process');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const memoryChecker = new MemoryUsageChecker;
 const memoryTracker = memoryChecker.initialize();
 
-memoryChecker.createFile();
+let isFirstRequest = true;
 
 app.use(express.json());
 
 // Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
+    if(isFirstRequest){
+        memoryChecker.setBaseLine();
+        isFirstRequest = false;
+    }
+
     res.on('finish', () => {
-        console.log("Request finished");
         memoryTracker();
     });
     next();
