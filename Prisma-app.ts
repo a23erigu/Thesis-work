@@ -18,6 +18,7 @@ app.use(express.json());
 // Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
     res.on('finish', () => {
+        console.log("Request finished");
         memoryTracker();
     });
     next();

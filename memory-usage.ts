@@ -34,10 +34,12 @@ export class MemoryUsageChecker{
     public createFile(){
         if(!fss.existsSync(this.fileName)){
             console.log(`Directory ${this.fileName} does not exist, creating...`);
-            fss.open(this.fileName, 'w', function(e){
-                if(e) console.log("Could not create file: ", e);
-                else console.log("Created file");
-            });
+            try{
+                fss.writeFileSync(this.fileName, '');;
+                console.log(`created file: ${this.fileName}`);
+            } catch(e){
+                console.error("Could not create file");
+            }
         }
     }
 
@@ -65,6 +67,7 @@ export class MemoryUsageChecker{
             const data = await fs.readFile(this.fileName, 'utf-8');
 
             const memArray = data.split(',').filter(val => val.trim() !== '');
+
             return memArray.map(val => parseFloat(val));
         }catch(e){
             console.error("Could not read memory usage");

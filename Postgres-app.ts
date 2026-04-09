@@ -13,15 +13,13 @@ memoryChecker.createFile();
 
 app.use(express.json());
 
-// Memory tracker middleware (memory check after request is complete)
+// Memory tracker middleware (memory check after request is sent)
 app.use((req, res, next) => {
     res.on('finish', () => {
         memoryTracker();
     });
     next();
 });
-
-app.use(express.json());
 
 app.use("/sequelize", require("./postgres-program/sequelize-router"))
 
