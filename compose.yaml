@@ -5,6 +5,9 @@ services:
       - '8090:8090'
     networks:
       - backend-network
+    volumes:
+      - .:/app
+      - /app/node_modules
 
   backend:
     build: .
