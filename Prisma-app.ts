@@ -14,13 +14,13 @@ let isFirstRequest = true;
 
 app.use(express.json());
 
+app.get('/reset', (req, res) => {
+    memoryChecker.setBaseLine();
+    res.send("reset called");
+})
+
 // Memory tracker middleware (memory check after request is complete)
 app.use((req, res, next) => {
-    if(isFirstRequest){
-        memoryChecker.setBaseLine();
-        isFirstRequest = false;
-    }
-
     res.on('finish', () => {
         memoryTracker();
     });

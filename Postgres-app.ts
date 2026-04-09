@@ -9,19 +9,17 @@ const PORT = 8090;    // the port used by the website
 const memoryChecker = new MemoryUsageChecker;
 const memoryTracker = memoryChecker.initialize();
 
-let isFirstRequest = true;
-
 memoryChecker.createFile();
 
 app.use(express.json());
 
+app.get('/reset', (req, res) => {
+    memoryChecker.setBaseLine();
+    res.send("reset called");
+})
+
 // Memory tracker middleware (memory check after request is sent)
 app.use((req, res, next) => {
-    if(isFirstRequest){
-        memoryChecker.setBaseLine();
-        isFirstRequest = false;
-    }
-
     res.on('finish', () => {
         console.log("Request finished");
         memoryTracker();

@@ -2,12 +2,12 @@ import newman from "newman";
 import * as fs from 'fs';
 import path from 'path';
 import { MemoryUsageChecker } from "./memory-usage";
-import { resolve } from "dns";
 
 const collection = process.argv[2]
 const iterations = parseInt(process.argv[3], 10) || 1;
 const dir = path.join(__dirname, 'reports');
 const memoryReader = new MemoryUsageChecker();
+const port = process.env.PORT || 8090;
 
 let output = '';
 
@@ -49,6 +49,12 @@ let requestCounter = 0;
 
 async function Run(){
     await memoryReader.clearMemoryUsage();
+
+    try{
+        await fetch(`http://localhost:${port}/reset`);
+    } catch(e){
+        console.error("Could not run garbage collector", e);
+    }
     
     newman.run({
         collection: collection,
@@ -73,7 +79,7 @@ async function Run(){
         
     }).on('done', async () => {
         console.log(`Test completed, reading memory file...`);
-        
+
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const memoryReadings = await memoryReader.getTotalMemoryUsage();
