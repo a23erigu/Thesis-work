@@ -54,7 +54,7 @@ export class MemoryUsageChecker{
             fs.appendFile(this.fileName, `${reading.toFixed(3)},`);
             console.log(`Added ${reading} to file`);
         } catch(e){
-            console.error(`Could not write ${reading} to file`);
+            console.error(`Could not write ${reading} to ${this.fileName}`);
         }
     }
 
