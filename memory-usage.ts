@@ -3,7 +3,7 @@ import * as fss from 'fs'
 import * as path from 'path'
 
 export class MemoryUsageChecker{
-    private fileName = path.join(__dirname, 'memoryReadings.txt');
+    private fileName = path.join(process.cwd(), 'memoryReadings.txt');
 
     // Initalizer function to ensure the program is running correctly with all prerequisites
     public initialize(){
