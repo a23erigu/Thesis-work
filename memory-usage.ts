@@ -51,7 +51,7 @@ export class MemoryUsageChecker{
     // Add the reading to the file with 3 decimal points
     private appendToFile(reading: number){
         try{
-            fs.appendFile(this.fileName, `${reading.toFixed(3)},`);
+            fss.appendFileSync(this.fileName, `${reading.toFixed(3)},`);
             console.log(`Added ${reading} to ${this.fileName}`);
         } catch(e){
             console.error(`Could not write ${reading} to ${this.fileName}`);
