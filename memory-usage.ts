@@ -33,12 +33,12 @@ export class MemoryUsageChecker{
     // Create the memory logging file if it doesn't exist
     public createFile(){
         if(!fss.existsSync(this.fileName)){
-            console.log(`Directory ${this.fileName} does not exist, creating...`);
+            console.log(`file ${this.fileName} does not exist, creating...`);
             try{
                 fss.writeFileSync(this.fileName, '');;
                 console.log(`created file: ${this.fileName}`);
             } catch(e){
-                console.error("Could not create file");
+                console.error("Could not create file", e);
             }
         }
     }
@@ -50,7 +50,9 @@ export class MemoryUsageChecker{
 
     // Add the reading to the file with 3 decimal points
     private async appendToFile(reading: number){
-        await fs.appendFile(this.fileName, `${reading.toFixed(3)},`);
+        await fs.appendFile(this.fileName, `${reading.toFixed(3)},`).catch(e => {
+            console.log("An error has occured", e);
+        });
     }
 
     // Get the current memory usage for the heap in MB
