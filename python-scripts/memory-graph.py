@@ -42,7 +42,7 @@ plt.bar(engines, average, color=['#2E5F7F', '#D87741'], alpha=1)
 plt.ylim(bottom=0, top=12)
 
 plt.title(Title)
-plt.ylabel('Mean memory use')
+plt.ylabel('Mean memory use (MB)')
 plt.xlabel('Engine')
 
 for i, val in enumerate(average):
