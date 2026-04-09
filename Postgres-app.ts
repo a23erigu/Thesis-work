@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     res.on('finish', () => {
         const url = req.originalUrl.toLocaleLowerCase();
 
-        if(url.includes("prisma") || url.includes("sql")){
+        if(url.includes("sequelize") || url.includes("sql")){
             memoryTracker();
         }
     });
