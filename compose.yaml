@@ -1,6 +1,8 @@
 services:
   petclinic-app:
     build: .
+    env_file:
+      - .env
     ports:
       - '8090:8090'
     networks:
