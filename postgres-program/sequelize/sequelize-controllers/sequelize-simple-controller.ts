@@ -40,13 +40,13 @@ export const SimpleCreate = async (req: Request, res: Response) => {    // Creat
 
 export const SimpleDelete = async (req: Request, res: Response) => {    // Delete the first owner called "Deller"
   try {
-    const Deller = await Owner.findOne({    // Deller = "SELECT * FROM owners WHERE first_name = 'Deller' LIMIT 1"
+    const Deller = await Owner.findOne({ 
       where: {
         first_name: "Deller"
       }
     });
 
-    const simpleDelete = await Owner.destroy({    // "DELETE FROM owners WHERE id = Deller.id"
+    const simpleDelete = await Owner.destroy({  
       where: {
         id: Deller?.get("id"),
       }
@@ -64,14 +64,14 @@ export const SimpleDelete = async (req: Request, res: Response) => {    // Delet
 
 export const SimpleUpdate = async (req: Request, res: Response) => {    // Update the city of the first owner called "Deller"
   try {
-    const oldDeller = await Owner.findOne({   // Deller = "SELECT * FROM owners WHERE first_name = 'Deller' AND city = 'Entier' LIMIT 1"
+    const oldDeller = await Owner.findOne({ 
       where: {
         first_name: "Deller",
         city: "Entier",
       }
     });
     
-    const simpleUpdate = await Owner.update(    // "UPDATE owners SET city = 'Exiter' WHERE id = Deller.id"
+    const simpleUpdate = await Owner.update( 
       {
         city: "Exiter"
       },
