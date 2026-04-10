@@ -16,11 +16,11 @@
     "@prisma/client": "^7.6.0",
     "dotenv": "^17.4.0",
     "express": "^5.2.1",
-    "newman": "^6.2.2",
     "mariadb": "^3.5.2",
+    "newman": "^6.2.2",
+    "nodemon": "^3.1.14",
     "pg": "^8.20.0",
     "sequelize": "^6.37.8",
-    "nodemon": "^3.1.14",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },

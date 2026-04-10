@@ -18,19 +18,6 @@ export const SimpleSelect = async (req: Request, res: Response) => {    // Get e
 
 };
 
-export const SimpleSelectPure = async (req: Request, res: Response) => {
-  try {
-    const [results, metadata] = await sequelize.query("SELECT * FROM pets");
-
-    res.json({
-      results,
-    });
-  }
-  catch (err) {
-    console.log(err);
-  }
-};
-
 export const SimpleCreate = async (req: Request, res: Response) => {    // Create owner "Deller"
   try {
     const simpleCreate = await Owner.create({ 
@@ -43,21 +30,6 @@ export const SimpleCreate = async (req: Request, res: Response) => {    // Creat
 
     res.json({
       simpleCreate,
-    });
-  }
-  catch (err) {
-    console.log(err);
-  }
-
-};
-
-export const SimpleCreatePure = async (req: Request, res: Response) => {    // Create owner "Deller"
-  try {
-
-    const [results, metadata] = await sequelize.query("INSERT INTO owners (first_name, last_name, address, city, telephone) VALUES ('Deller', 'Menser', 'notwere st', 'Entier', '0000666000')");
-
-    res.json({
-      results,
     });
   }
   catch (err) {

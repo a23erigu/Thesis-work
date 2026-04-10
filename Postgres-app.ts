@@ -16,7 +16,7 @@ app.use(express.json());
 app.get('/reset', (req, res) => {
     memoryChecker.setBaseLine();
     res.send("reset called");
-})
+});
 
 // Memory tracker middleware (memory check after request is sent)
 app.use((req, res, next) => {
@@ -27,12 +27,13 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/sequelize", require("./postgres-program/sequelize-router"))
+app.use("/sequelize", require("./postgres-program/sequelize/sequelize-router"));
+app.use("/sql", require("./postgres-program/sql/sql-router"));
 
 app.get('/', async(req, res) => {
-    res.send("<H1> Server is working <H1>")
-})
+    res.send("<H1> Server is working <H1>");
+});
 
 app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
+  console.log(`Postgres-app listening at http://localhost:${PORT}`);
 });
