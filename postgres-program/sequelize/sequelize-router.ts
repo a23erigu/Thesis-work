@@ -1,6 +1,6 @@
 import express from 'express'
 import { GetEverything, AllElement, AllOwners, AllOwnersPure } from './sequelize-controllers/sequelize-old-controller'
-import { SimpleSelect, SimpleSelectPure, SimpleCreate, SimpleCreatePure, SimpleDelete, SimpleUpdate  } from './sequelize-controllers/sequelize-simple-controller';
+import { SimpleSelect, SimpleCreate, SimpleDelete, SimpleUpdate  } from './sequelize-controllers/sequelize-simple-controller';
 import { AdvancedSelect, AdvancedCreate, AdvancedDelete, AdvancedUpdate } from './sequelize-controllers/sequelize-advanced-controller';
 
 const sequelizeRouter = express.Router();
@@ -15,9 +15,7 @@ sequelizeRouter.get("/AllOwnersPure", AllOwnersPure);
 
 // Simple
 sequelizeRouter.get("/Simple/Select", SimpleSelect);
-sequelizeRouter.get("/Simple/Select/Pure", SimpleSelectPure);
 sequelizeRouter.get("/Simple/Create", SimpleCreate);
-sequelizeRouter.get("/Simple/Create/Pure", SimpleCreatePure);
 sequelizeRouter.get("/Simple/Delete", SimpleDelete);
 sequelizeRouter.get("/Simple/Update", SimpleUpdate);
 
