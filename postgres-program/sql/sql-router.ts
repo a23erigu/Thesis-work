@@ -1,5 +1,5 @@
 import express from 'express'
-import { SimpleSelect, SimpleCreate, SimpleDelete, SimpleUpdate } from './sql-controller';
+import { SimpleSelect, SimpleCreate, SimpleDelete, SimpleUpdate } from './sql-controllers/sql-simple-controller';
 
 const sqlRouter = express.Router();
 
