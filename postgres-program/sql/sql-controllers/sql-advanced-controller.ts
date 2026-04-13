@@ -55,13 +55,22 @@ export const AdvancedDelete = async (req: Request, res: Response) => {
   try {
     conn = await pool.connect()
 
-    const Deller = await conn.query("");
-    const id = Deller["rows"][0]["id"];
+    const Entre = await conn.query("SELECT owners.id FROM owners WHERE first_name = 'Entre' LIMIT 1");
 
-    const result = await conn.query();
+    const Blue = await conn.query("SELECT pets.id FROM pets WHERE owner_id = " + Entre["rows"][0]["id"]);
+
+    const visit = await conn.query("SELECT visits.id FROM visits WHERE pet_id = " + Blue["rows"][0]["id"]);
+
+    const results1 = await conn.query("DELETE FROM visits WHERE id = " + visit["rows"][0]["id"]);
+
+    const results2 = await conn.query("DELETE FROM pets WHERE id = " + Blue["rows"][0]["id"]);
+
+    const results3 = await conn.query("DELETE FROM owners WHERE id = " + Entre["rows"][0]["id"]);
 
     res.json({
-      result,
+      results1,
+      results2,
+      results3
     });
   }
   catch (err) {

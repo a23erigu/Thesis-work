@@ -50,12 +50,11 @@ export const SimpleDelete = async (req: Request, res: Response) => {    // Delet
     conn = await pool.connect()
 
     const Deller = await conn.query("SELECT * FROM owners WHERE first_name = 'Deller' LIMIT 1");
-    const id = Deller["rows"][0]["id"];
 
-    const result = await conn.query("DELETE FROM owners WHERE id = " + id);
+    const results = await conn.query("DELETE FROM owners WHERE id = " + Deller["rows"][0]["id"]);
 
     res.json({
-      result,
+      results,
     });
   }
   catch (err) {
@@ -76,10 +75,10 @@ export const SimpleUpdate = async (req: Request, res: Response) => {    // Updat
     const oldDeller = await conn.query("SELECT * FROM owners WHERE first_name = 'Deller' AND city = 'Entier' LIMIT 1");
     const id = oldDeller["rows"][0]["id"];
 
-    const result = await conn.query("UPDATE owners SET city = 'Exiter' WHERE id = " + id);
+    const results = await conn.query("UPDATE owners SET city = 'Exiter' WHERE id = " + id);
 
     res.json({
-      result,
+      results,
     });
   }
   catch (err) {
