@@ -10,8 +10,6 @@ const PORT = process.env.PORT || 5000;
 const memoryChecker = new MemoryUsageChecker;
 const memoryTracker = memoryChecker.initialize();
 
-let isFirstRequest = true;
-
 app.use(express.json());
 
 app.get('/reset', (req, res) => {
@@ -28,8 +26,8 @@ app.use((req, res, next) => {
 });
 
 // Establish endpoints (put request endpoints here)
-app.use('/prisma/get', require('./mariaDB-program/prisma/prisma-routes/get/prisma-get-routes'));
-app.use('/sql/get', require('./mariaDB-program/sql/sql-routes/get/sql-get-routes'));
+app.use('/prisma', require('./mariaDB-program/prisma/prisma-routes/prisma-router'));
+app.use('/sql', require('./mariaDB-program/sql/sql-routes/sql-router'));
 
 // Test endpoint to ensure express server is running
 app.get('/', async(req, res) => {

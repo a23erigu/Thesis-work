@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsx --expose-gc Postgres-app.ts",
-    "dev": "tsx --expose-gc --env-file=.env Prisma-app.ts"
+    "dev": "tsx --expose-gc --env-file=.env MariaDB-app.ts"
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.6.0",
