@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 export const AdvancedSelect = async (req: Request, res: Response) => {    // Select all owners who have a hamster that has had a visit
   try {
-    const advancedSelect = await Owner.findAll({    // "SELECT owners.id, owners.first_name, owners.last_name, owners.address, owners.city, owners.telephone FROM owners JOIN pets ON owners.id = pets.owner_id "
+    const advancedSelect = await Owner.findAll({
       include: [{
         model: Pet,
         required: true,
