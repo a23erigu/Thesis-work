@@ -29,9 +29,9 @@ function ValidateOutput(){
         const seconds = String(dateTime.getSeconds()).padStart(2, '0');
         const cleanTime = `${hours}-${minutes}-${seconds}`
 
-        const collectionName = path.basename(collection);
+        const collectionName = path.basename(collection, '.postman_collection.json');
         
-        output = path.join(dir+`/report-${collectionName}-${iterations - 1}-${cleanTime}.json`);
+        output = path.join(dir+`/report-${collectionName}-${iterations}-${cleanTime}.json`);
     }
 }
 
@@ -58,7 +58,7 @@ async function Run(){
     
     newman.run({
         collection: collection,
-        iterationCount: iterations,
+        iterationCount: iterations + 1,
     }).on('request', (e: Error | null, args: any) => {
         if(e){
             console.error("Request failed: ", e);
@@ -84,7 +84,7 @@ async function Run(){
         
         const memoryReadings = await memoryReader.getTotalMemoryUsage();
 
-        if(memoryReadings.length !== iterations){
+        if(memoryReadings.length !== iterations +1){
             console.error("Incorrect amount of memory reads");
             process.exit();
         }
