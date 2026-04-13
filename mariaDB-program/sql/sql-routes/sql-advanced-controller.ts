@@ -1,24 +1,15 @@
-import pool from "../../sql-db-MariaDB"
+import pool from "../sql-db-MariaDB"
 import { Request, Response } from "express";
 
-export const sqlGetSimple = async (req: Request, res: Response) => {
-    let conn;
+export const sqlCreateAdvanced = async(req: Request, res: Response) => {
     try{
-        conn = await pool.getConnection();
 
-        const query = await conn.query('SELECT * FROM pets');
-
-        res.json(query);
     } catch(e){
-        console.log(`Could not get simple SQL data, error: ${e}`);
-    } finally{
-        if(conn){
-            conn.release();
-        }
+
     }
 }
 
-export const sqlGetAdvanced = async (req: Request, res: Response) => {
+export const sqlReadAdvanced = async (req: Request, res: Response) => {
     let conn;
     try{
         conn = await pool.getConnection();
@@ -34,5 +25,21 @@ export const sqlGetAdvanced = async (req: Request, res: Response) => {
         if(conn){
             conn.release();
         }
+    }
+}
+
+export const sqlUpdateAdvanced = async(req: Request, res: Response) => {
+    try{
+
+    } catch(e){
+        
+    }
+}
+
+export const sqlDeleteAdvanced = async(req: Request, res: Response) => {
+    try{
+
+    } catch(e){
+        
     }
 }
