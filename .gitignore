@@ -3,3 +3,4 @@ newman-test/
 reports/
 .env
 memoryReadings.txt
+.DS_Store
