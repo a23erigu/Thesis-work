@@ -14,8 +14,12 @@ memoryChecker.createFile();
 app.use(express.json());
 
 app.get('/reset', (req, res) => {
-    memoryChecker.setBaseLine();
     res.send("reset called");
+    
+    setTimeout(() => {
+        memoryChecker.setBaseLine();
+        console.log("Delayed GC");
+    }, 100);
 });
 
 // Memory tracker middleware (memory check after request is sent)

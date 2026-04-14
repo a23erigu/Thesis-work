@@ -78,7 +78,7 @@ async function Run(){
         });
         
     }).on('done', async () => {
-        console.log(`Test completed, reading memory file...`);
+        console.log(`Reading memory file...`);
 
         await new Promise(resolve => setTimeout(resolve, 500));
         
@@ -98,7 +98,8 @@ async function Run(){
         
         if(allResults){
             fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
-            console.log(`Test completed, created report: ${output}`);
+            console.log("--- Test completed ---");
+            console.log(`Created report: ${output}`);
         } else{
             console.error("Could not get memory from test");
             process.exit();
