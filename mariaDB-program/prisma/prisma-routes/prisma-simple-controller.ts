@@ -4,54 +4,86 @@ import { Request, Response } from "express";
 
 export const prismaCreateSimple = async(req: Request, res: Response) => {
     try{
-        //const query = 
+        const firstName = req.body.firstName;
 
-        //res.json(query);
+        const query = await prisma.owners.create({
+            data:{
+                first_name: firstName,
+                last_name: "Menser",
+                address: "Notwere st",
+                city: "Entier",
+                telephone: "0000666000"
+            }
+        }); 
+
+        res.json(query);
     } catch(e){
         console.log(`Error fetching data, ${e}`);
-    } finally{
-        prisma.$disconnect;
     }
 }
 
 export const prismaReadSimple = async(req: Request, res: Response) => {
     try{
-        const query = await prisma.pets.findMany({
-            where:{
-                owners:{
-                    city: 'Madison'
-                }
-            }
-        });
+        const query = await prisma.pets.findMany();
 
         res.json(query);
     } catch(e){
-        console.log(`Error fetching prisma read simple data, ${e}`);
-    } finally{
-        prisma.$disconnect;
+        console.log(`Error fetching data, ${e}`);
     }
 }
 
 export const prismaUpdateSimple = async(req: Request, res: Response) => {
     try{
-        //const query = 
+        const city = req.body.city;
 
-        //res.json(query);
+        const menser = await prisma.owners.findFirst({
+            where:{
+                last_name: "Menser",
+                city: "Entier"
+            }
+        });
+
+        if(!menser){
+            return res.json({message: "No Menser found"});
+        }
+
+        const query = await prisma.owners.update({
+            where:{
+                id: menser.id,
+                last_name: "Menser",
+                city: "Entier"
+            },
+            data:{
+                city: city
+            }
+        });
+
+        res.json(query);
     } catch(e){
         console.log(`Error fetching data, ${e}`);
-    } finally{
-        prisma.$disconnect;
     }
 }
 
 export const prismaDeleteSimple = async(req: Request, res: Response) => {
     try{
-        //const query = 
+        const menser = await prisma.owners.findFirst({
+            where:{
+                last_name: "Menser"
+            }
+        })
 
-        //res.json(query);
+        if(!menser){
+            return res.json({message: "No Menser found"});
+        }
+
+        const query = await prisma.owners.delete({
+            where:{
+                id: menser.id
+            }
+        });
+
+        res.json(query);
     } catch(e){
         console.log(`Error fetching data, ${e}`);
-    } finally{
-        prisma.$disconnect;
     }
 }

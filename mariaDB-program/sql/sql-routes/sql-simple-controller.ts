@@ -10,6 +10,7 @@ export const sqlCreateSimpleFixed = async(req: Request, res: Response) => {
             INSERT INTO owners (first_name, last_name, address, city, telephone) 
             VALUES ("Deller", 'Menser', 'Notwere st', 'Entier', '0000666000')
             `);
+
         const id = query.insertId.toString();
 
         res.json(id);
@@ -33,6 +34,7 @@ export const sqlCreateSimpleRand = async(req: Request, res: Response) => {
             INSERT INTO owners (first_name, last_name, address, city, telephone) 
             VALUES (?, 'Menser', 'Notwere st', 'Entier', '0000666000')`,
             [firstName]);
+
         const id = query.insertId.toString();
 
         res.json(id);
@@ -78,8 +80,8 @@ export const sqlUpdateSimple = async(req: Request, res: Response) => {
 
         res.json(result);
   }
-  catch (err) {
-    console.log(err);
+  catch (e) {
+    console.log(`Could not update data, error: ${e}`);
   } finally{
         if(conn){
             conn.release();
@@ -102,7 +104,7 @@ export const sqlDeleteSimple = async(req: Request, res: Response) => {
             WHERE id = ?`,
         [target]);
 
-        console.log("Deleted rows: ", query.affectedRows);
+        //console.log("Deleted rows: ", query.affectedRows);
         const id = query.insertId.toString();
 
         res.json(id);
