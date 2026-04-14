@@ -8,7 +8,7 @@ import scipy.stats as stats
 import statsmodels.stats.api as sm
 
 ORM = "Sequelize"       # Decides what ORM is being used
-Title = "All Owners"        # Decides the title
+Title = "Simple select"        # Decides the title
 
 def extract_newman_memory_use(filename):
     with open(filename, 'r') as f:
@@ -18,8 +18,8 @@ def extract_newman_memory_use(filename):
 
     return memory_use_list
 
-orm_memory_use = extract_newman_memory_use("report-Sequelize_AllOwners.postman_collection.json-100-15-23-50.json")
-sql_memory_use = extract_newman_memory_use("report-SQL_AllOwners.postman_collection.json-100-15-21-37.json")
+orm_memory_use = extract_newman_memory_use("report-Sequelize_SimpleSelect-1001-17-07-36.json")
+sql_memory_use = extract_newman_memory_use("report-SQL_SimpleSelect-1001-16-33-56.json")
 
 mean_orm = mean(orm_memory_use)
 mean_sql = mean(sql_memory_use)
@@ -46,7 +46,7 @@ plt.ylabel('Mean memory use (MB)')
 plt.xlabel('Engine')
 
 for i, val in enumerate(average):
-    plt.text(i, val + 0.1, f'{val:.2} ms', ha='center', fontweight='bold')
+    plt.text(i, val + 0.1, f'{val:.2} MB', ha='center', fontweight='bold')
 
 plt.tight_layout()
 plt.show()

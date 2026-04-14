@@ -1,6 +1,7 @@
 node_modules/
 newman-test/
 reports/
+settings.json
 .env
 memoryReadings.txt
 .DS_Store
