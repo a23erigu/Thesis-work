@@ -8,7 +8,7 @@ import scipy.stats as stats
 import statsmodels.stats.api as sm
 
 ORM = "Sequelize"       # Decides what ORM is being used
-Title = "All Owners"        # Decides the title
+Title = "Simple Select"        # Decides the title
 
 def extract_newman_times(filename):
     with open(filename, 'r') as f:
@@ -18,8 +18,8 @@ def extract_newman_times(filename):
 
     return times_list
 
-orm_times = extract_newman_times("report-Sequelize_AllOwners.postman_collection.json-100-15-23-50.json")
-sql_times = extract_newman_times("report-SQL_AllOwners.postman_collection.json-100-15-21-37.json")
+orm_times = extract_newman_times("report-Sequelize_SimpleSelect-1001-17-07-36.json")
+sql_times = extract_newman_times("report-SQL_SimpleSelect-1001-16-33-56.json")
 
 mean_orm = mean(orm_times)
 mean_sql = mean(sql_times)
@@ -33,7 +33,7 @@ print()
 print(f"SQL mean [{mean_sql:.3f}]")
 print(f"SQL 95% CI [{sql_interval[0]:.3f}, {sql_interval[1]:.3f}]")
 
-engines = [ORM, 'pure-SQL']
+engines = [ORM, 'Pure-SQL']
 average = [mean_orm, mean_sql]
 
 plt.figure(figsize=(8, 6))
