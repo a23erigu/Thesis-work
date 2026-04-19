@@ -18,7 +18,6 @@ export class MemoryUsageChecker{
             process.exit();
         } else {
             console.log("Garbage collector enabled!");
-            global.gc?.()
         }
 
         // Return the memory usage after request and add to memoryReadings.txt file
@@ -27,13 +26,6 @@ export class MemoryUsageChecker{
 
             this.appendToFile(reading);
         }
-    }
-
-    public setBaseLine(){
-        global.gc?.();
-        console.log("Garbage collector run");
-
-        this.baseLine = this.getMemoryUsage();
     }
 
     // Create the memory logging file if it doesn't exist

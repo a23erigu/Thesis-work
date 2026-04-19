@@ -13,11 +13,11 @@ const memoryTracker = memoryChecker.initialize();
 app.use(express.json());
 
 app.get('/reset', (req, res) => {
-    res.send("reset called");
-    
     setTimeout(() => {
-        memoryChecker.setBaseLine();
-        console.log("Delayed GC");
+        global.gc?.();
+        global.gc?.();
+        console.log("Gargabe collector run");
+        res.send("reset called");
     }, 100);
 });
 

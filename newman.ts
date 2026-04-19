@@ -47,7 +47,10 @@ interface Results {
 const results: Results[] = [];
 let requestCounter = 0;
 
-async function Run(){
+async function warmUp() {
+    console.log("Running warmup...");
+    await RunNewman(true);
+    
     await memoryReader.clearMemoryUsage();
 
     try{
@@ -56,55 +59,69 @@ async function Run(){
         console.error("Could not run garbage collector", e);
     }
     
-    newman.run({
-        collection: collection,
-        iterationCount: iterations + 1,
-    }).on('request', (e: Error | null, args: any) => {
-        if(e){
-            console.error("Request failed: ", e);
-            return;
-        }
-        
-        const firstRequest = args.cursor.iteration === 0 && args.cursor.position === 0;
-        
-        if(firstRequest){
-            console.log("Running collection and dropping first request...");
-            return;
-        }
-        
-        results.push({
-            iteration: requestCounter++,
-            responseTime: args.response.responseTime
-        });
-        
-    }).on('done', async () => {
-        console.log(`Reading memory file...`);
+    console.log("Running test...");
+    await RunNewman(false);
+}
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        const memoryReadings = await memoryReader.getTotalMemoryUsage();
+async function RunNewman(isWarmup: boolean):Promise<void>{
+    return new Promise((resolve, rejects) => {
+        newman.run({
+            collection: collection,
+            iterationCount: isWarmup? 100 : iterations,
+        }).on('request', (e: Error | null, args: any) => {
+            if(e){
+                console.error("Request failed: ", e);
+                return;
+            }
+            
+            if(isWarmup){
+                return;
+            }
+            
+            results.push({
+                iteration: requestCounter++,
+                responseTime: args.response.responseTime
+            });
+            
+        }).on('done', async (e: Error | null, summary: any) => {
+            if(e){
+                return rejects(e)
+            }
+            
+            if(isWarmup){
+                return resolve();
+            }
+            
+            console.log(`Reading memory file...`);
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const memoryReadings = await memoryReader.getTotalMemoryUsage();
+            
+            if(memoryReadings.length !== iterations){
+                console.error("Incorrect amount of memory readings");
+                process.exit();
+            }
+            
+            const allResults = results.map((results, index) => {
+                return{
+                    ...results,
+                    memoryUse: memoryReadings[index] || null
+                };
+            });
+            
+            if(allResults){
+                fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
+                console.log("--- Test completed ---");
+                console.log(`Created report: ${output}`);
 
-        if(memoryReadings.length !== iterations +1){
-            console.error("Incorrect amount of memory reads");
-            process.exit();
-        }
-
-        const allResults = results.map((results, index) => {
-            return{
-                ...results,
-                memoryUse: memoryReadings[index + 1] || null
-            };
-        });
-        
-        if(allResults){
-            fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
-            console.log("--- Test completed ---");
-            console.log(`Created report: ${output}`);
-        } else{
-            console.error("Could not get memory from test");
-            process.exit();
-        }
+                resolve();
+            } else{
+                console.error("Could not get memory from test");
+                process.exit();
+            }
+        })
     })
 }
 
-Run();
+warmUp();

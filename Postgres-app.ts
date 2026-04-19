@@ -17,7 +17,8 @@ app.get('/reset', (req, res) => {
     res.send("reset called");
     
     setTimeout(() => {
-        memoryChecker.setBaseLine();
+        global.gc?.();
+        global.gc?.();
         console.log("Delayed GC");
     }, 100);
 });
