@@ -88,13 +88,25 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {
   try {
     conn = await pool.connect()
 
-    const oldDeller = await conn.query("");
-    const id = oldDeller["rows"][0]["id"];
+    const oldEntre= await conn.query("SELECT id FROM owners WHERE last_name = 'Dublo' LIMIT 1");
+    const idEntre = oldEntre["rows"][0]["id"];
 
-    const result = await conn.query();
+    const oldBlue= await conn.query("SELECT id FROM pets WHERE owner_id = " + idEntre);
+    const idBlue = oldBlue["rows"][0]["id"];
+
+    const oldVisit= await conn.query("SELECT id FROM visits WHERE pet_id = " + idBlue);
+    const idVisit = oldVisit["rows"][0]["id"];
+
+    const result1 = await conn.query("UPDATE visits SET description = 'flu shot' WHERE id = " + idVisit);
+
+    const result2 = await conn.query("UPDATE pets SET type_id = 1 WHERE id = " + idBlue);
+
+    const result3 = await conn.query("UPDATE owners SET last_name = 'Tris', city = 'New York', address = 'Wall street 5' WHERE id = " + idEntre);
 
     res.json({
-      result,
+      result1,
+      result2,
+      result3
     });
   }
   catch (err) {
