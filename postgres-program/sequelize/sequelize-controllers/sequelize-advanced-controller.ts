@@ -119,27 +119,38 @@ export const AdvancedDelete = async (req: Request, res: Response) => {    // Del
 export const AdvancedUpdate = async (req: Request, res: Response) => {
   try {
 
-    const oldEntre = await Owner.findOne({ 
-      where: {
-        last_name: "Dublo",
-      }
-    });
-
-    const oldBlue = await Pet.findOne({
-      where: {
-        owner_id: oldEntre?.get("id")
-      }
-    });
-
     const oldVisit = await Visit.findOne({
-      where: {
-        pet_id: oldBlue?.get("id")
-      }
+      include: [{
+        model: Pet,
+        required: true,
+        include: [{
+          model: Owner,
+          where: {
+            last_name: "Dublo"
+          },
+          required: true,
+        }],
+      }]
+    });
+
+    const oldEntre = await Owner.findOne({ 
+      include: [{
+        model: Pet,
+        required: true,
+        include: [{
+          model: Visit,
+          where: {
+            id: oldVisit?.get("id")
+          },
+          required: true,
+        }],
+      }]
     });
 
     const advancedUpdate1 = await Visit.update( 
       {
-        description: "flu shot"
+        visit_date: '2011-06-24',
+        description: 'rabies shot boost'
       },
       {
         where: {
@@ -148,22 +159,9 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {
       }
     );
 
-    const advancedUpdate2 = await Pet.update( 
+    const advancedUpdate2 = await Owner.update( 
       {
-        type_id: 1
-      },
-      {
-        where: {
-          id: oldBlue?.get("id")
-        }
-      }
-    );
-
-    const advancedUpdate3 = await Owner.update( 
-      {
-        last_name: "Tris",
-        city: "New York",
-        address: "Wall street 5"
+        address: "8 Rue de Nesle"
       },
       {
         where: {
@@ -175,7 +173,6 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {
     res.json({
       advancedUpdate1,
       advancedUpdate2,
-      advancedUpdate3,
     })
   }
   catch (err) {
