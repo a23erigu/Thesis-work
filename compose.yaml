@@ -1,5 +1,5 @@
 services:
-  petclinic-app:
+  postgres-app:
     build: .
     env_file:
       - .env

@@ -116,9 +116,67 @@ export const AdvancedDelete = async (req: Request, res: Response) => {    // Del
 
 };
 
-export const AdvancedUpdate = async (req: Request, res: Response) => { // don't know what do about this one
+export const AdvancedUpdate = async (req: Request, res: Response) => {
   try {
-    console.log("this is a test");
+
+    const oldEntre = await Owner.findOne({ 
+      where: {
+        last_name: "Dublo",
+      }
+    });
+
+    const oldBlue = await Pet.findOne({
+      where: {
+        owner_id: oldEntre?.get("id")
+      }
+    });
+
+    const oldVisit = await Visit.findOne({
+      where: {
+        pet_id: oldBlue?.get("id")
+      }
+    });
+
+    const advancedUpdate1 = await Visit.update( 
+      {
+        description: "flu shot"
+      },
+      {
+        where: {
+          id: oldVisit?.get("id")
+        }
+      }
+    );
+
+    const advancedUpdate2 = await Pet.update( 
+      {
+        type_id: 1
+      },
+      {
+        where: {
+          id: oldBlue?.get("id")
+        }
+      }
+    );
+
+    const advancedUpdate3 = await Owner.update( 
+      {
+        last_name: "Tris",
+        city: "New York",
+        address: "Wall street 5"
+      },
+      {
+        where: {
+          id: oldEntre?.get("id")
+        }
+      }
+    );
+
+    res.json({
+      advancedUpdate1,
+      advancedUpdate2,
+      advancedUpdate3,
+    })
   }
   catch (err) {
     console.log(err);
