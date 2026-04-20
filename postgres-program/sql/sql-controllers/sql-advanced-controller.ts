@@ -23,7 +23,7 @@ export const AdvancedSelect = async (req: Request, res: Response) => {      // S
 
 };
 
-export const AdvancedCreate = async (req: Request, res: Response) => { 
+export const AdvancedCreate = async (req: Request, res: Response) => {  // Creates the owner "Entre", there dog "Blue" and a visit for Blue
   let conn;
   try {
     conn = await pool.connect()
@@ -50,7 +50,7 @@ export const AdvancedCreate = async (req: Request, res: Response) => {
 
 };
 
-export const AdvancedDelete = async (req: Request, res: Response) => {   
+export const AdvancedDelete = async (req: Request, res: Response) => {   // Delete the owner "Entre", there dog "Blue" and the visit for Blue
   let conn;
   try {
     conn = await pool.connect()
@@ -83,30 +83,24 @@ export const AdvancedDelete = async (req: Request, res: Response) => {
 
 };
 
-export const AdvancedUpdate = async (req: Request, res: Response) => { 
+export const AdvancedUpdate = async (req: Request, res: Response) => {  // Update the owner "Entre" and the visit for there Blue
   let conn
   try {
     conn = await pool.connect()
 
-    const oldEntre= await conn.query("SELECT id FROM owners WHERE last_name = 'Dublo' LIMIT 1");
-    const idEntre = oldEntre["rows"][0]["id"];
-
-    const oldBlue= await conn.query("SELECT id FROM pets WHERE owner_id = " + idEntre);
-    const idBlue = oldBlue["rows"][0]["id"];
-
-    const oldVisit= await conn.query("SELECT id FROM visits WHERE pet_id = " + idBlue);
+    const oldVisit= await conn.query("SELECT visits.id FROM visits JOIN pets ON visits.pet_id = pets.id JOIN owners ON pets.owner_id = owners.id WHERE owners.last_name = 'Dublo' AND owners.address = 'le trest avenue 5' LIMIT 1");
     const idVisit = oldVisit["rows"][0]["id"];
 
-    const result1 = await conn.query("UPDATE visits SET description = 'flu shot' WHERE id = " + idVisit);
+    const oldOwner = await conn.query("SELECT owners.id FROM owners JOIN pets ON owners.id = pets.owner_id JOIN visits ON pets.id = visits.pet_id WHERE visits.id = '" + idVisit + "' LIMIT 1");
+    const idOwner = oldOwner["rows"][0]["id"];
 
-    const result2 = await conn.query("UPDATE pets SET type_id = 1 WHERE id = " + idBlue);
+    const result1 = await conn.query("UPDATE visits SET visit_date = '2011-06-24', description = 'rabies shot boost' WHERE id = " + idVisit);
 
-    const result3 = await conn.query("UPDATE owners SET last_name = 'Tris', city = 'New York', address = 'Wall street 5' WHERE id = " + idEntre);
+    const result2 = await conn.query("UPDATE owners SET address = '8 Rue de Nesle' WHERE id = " + idOwner);
 
     res.json({
       result1,
-      result2,
-      result3
+      result2
     });
   }
   catch (err) {

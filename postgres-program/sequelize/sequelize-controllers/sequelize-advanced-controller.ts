@@ -116,7 +116,7 @@ export const AdvancedDelete = async (req: Request, res: Response) => {    // Del
 
 };
 
-export const AdvancedUpdate = async (req: Request, res: Response) => {
+export const AdvancedUpdate = async (req: Request, res: Response) => {  // Update the owner "Entre" and the visit for there Blue
   try {
 
     const oldVisit = await Visit.findOne({
@@ -133,7 +133,7 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {
       }]
     });
 
-    const oldEntre = await Owner.findOne({ 
+    const oldOwner = await Owner.findOne({ 
       include: [{
         model: Pet,
         required: true,
@@ -165,7 +165,7 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {
       },
       {
         where: {
-          id: oldEntre?.get("id")
+          id: oldOwner?.get("id")
         }
       }
     );
