@@ -14,12 +14,11 @@ memoryChecker.createFile();
 app.use(express.json());
 
 app.get('/reset', (req, res) => {
-    res.send("reset called");
-    
     setTimeout(() => {
         global.gc?.();
         global.gc?.();
-        console.log("Delayed GC");
+        console.log("Garbage collector run");
+        res.send("reset called");
     }, 100);
 });
 
