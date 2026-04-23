@@ -46,7 +46,7 @@ plt.ylabel('Mean memory use (MB)')
 plt.xlabel('Engine')
 
 for i, val in enumerate(average):
-    plt.text(i, val + 0.1, f'{val:.2} MB', ha='center', fontweight='bold')
+    plt.text(i, val + 0.1, f'{val:.1} MB', ha='center', fontweight='bold')
 
 plt.tight_layout()
 plt.show()

@@ -16,7 +16,6 @@ app.use(express.json());
 app.get('/reset', (req, res) => {
     setTimeout(() => {
         global.gc?.();
-        global.gc?.();
         console.log("Garbage collector run");
         res.send("reset called");
     }, 100);
@@ -25,8 +24,9 @@ app.get('/reset', (req, res) => {
 // Memory tracker middleware (memory check after request is sent)
 app.use((req, res, next) => {
     res.on('finish', () => {
-        console.log("Request finished");
         memoryTracker();
+        global.gc?.();
+        console.log("Request finished");
     });
     next();
 });

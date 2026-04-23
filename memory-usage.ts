@@ -1,5 +1,5 @@
-import * as fs from 'fs/promises'
-import * as fss from 'fs'
+import * as fsp from 'fs/promises'
+import * as fs from 'fs'
 import * as path from 'path'
 
 export class MemoryUsageChecker{
@@ -22,7 +22,7 @@ export class MemoryUsageChecker{
 
         // Return the memory usage after request and add to memoryReadings.txt file
         return () => {
-            const reading = this.getMemoryUsage() - this.baseLine;
+            const reading = this.getMemoryUsage();
 
             this.appendToFile(reading);
         }
@@ -30,10 +30,10 @@ export class MemoryUsageChecker{
 
     // Create the memory logging file if it doesn't exist
     public createFile(){
-        if(!fss.existsSync(this.file)){
+        if(!fs.existsSync(this.file)){
             console.log(`file ${this.file} does not exist, creating...`);
             try{
-                fss.writeFileSync(this.file, '');
+                fs.writeFileSync(this.file, '');
                 console.log(`created file: ${this.file}`);
             } catch(e){
                 console.error("Could not create file", e);
@@ -43,13 +43,13 @@ export class MemoryUsageChecker{
 
     // Clear the file contents so that they don't spill over to the next measurement
     public async clearMemoryUsage(){
-        await fs.writeFile(this.file, '');
+        await fsp.writeFile(this.file, '');
     }
 
     // Add the reading to the file with 3 decimal points
     private appendToFile(reading: number){
         try{
-            fss.appendFileSync(this.file, `${reading.toFixed(3)},`);
+            fs.appendFileSync(this.file, `${reading.toFixed(3)},`);
         } catch(e){
             console.error(`Could not write ${reading} to ${this.file}`);
         }
@@ -66,7 +66,7 @@ export class MemoryUsageChecker{
     // Get every memory reading made during a test and map it to each request in newman.ts
     public async getTotalMemoryUsage(): Promise<Number[]>{
         try{
-            const data = await fs.readFile(this.file, 'utf-8');
+            const data = await fsp.readFile(this.file, 'utf-8');
 
             const memArray = data.split(',').filter(val => val.trim() !== '');
 
