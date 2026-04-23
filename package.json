@@ -13,8 +13,9 @@
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.6.0",
-    "@prisma/client": "^7.6.0",
-    "dotenv": "^17.4.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mariadb": "^3.5.2",
     "newman": "^6.2.2",
@@ -27,8 +28,9 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/newman": "^5.3.6",
-    "@types/node": "^25.5.0",
-    "prisma": "^7.6.0",
+    "@types/node": "^25.6.0",
+    "@types/pg": "^8.20.0",
+    "prisma": "^7.8.0",
     "ts-node": "^10.9.2"
   }
 }
