@@ -33,7 +33,7 @@ print()
 print(f"SQL mean [{mean_sql:.3f}]")
 print(f"SQL 95% CI [{sql_interval[0]:.3f}, {sql_interval[1]:.3f}]")
 
-engines = [ORM, 'pure-SQL']
+engines = [ORM, 'Pure-SQL']
 average = [mean_orm, mean_sql]
 
 plt.figure(figsize=(8, 6))
