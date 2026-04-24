@@ -83,7 +83,7 @@ export const AdvancedDelete = async (req: Request, res: Response) => {   // Dele
 
 };
 
-export const AdvancedUpdate = async (req: Request, res: Response) => {  // Update the owner "Entre" and the visit for there Blue
+export const AdvancedUpdate = async (req: Request, res: Response) => {  // Update the owner "Entre" and the visit for there dog Blue
   let conn
   try {
     conn = await pool.connect()

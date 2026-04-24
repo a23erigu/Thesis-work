@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/sequelize", require("./postgres-program/sequelize/sequelize-router"));
+app.use("/prisma", require("./postgres-program/prisma/prisma-router"))
 app.use("/sql", require("./postgres-program/sql/sql-router"));
 
 app.get('/', async(req, res) => {
