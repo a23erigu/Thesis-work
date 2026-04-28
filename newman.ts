@@ -66,9 +66,13 @@ async function warmUp() {
 
 async function RunNewman(isWarmup: boolean):Promise<void>{
     return new Promise((resolve, rejects) => {
+        const startTimes = new Map<String, number>();
+
         newman.run({
             collection: collection,
             iterationCount: isWarmup? 100 : iterations,
+        }).on('beforeRequest', (e: Error | null, args: any) => {
+            startTimes.set(args.cursor.ref, performance.now())
         }).on('request', (e: Error | null, args: any) => {
             if(e){
                 console.error("Request failed: ", e);
@@ -78,10 +82,15 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
             if(isWarmup){
                 return;
             }
+
+            const endTime = performance.now()
+            const startTime = startTimes.get(args.cursor.ref)
+
+            const responseTimePrecise = startTime ? (endTime - startTime) : args.response.responseTime;
             
             results.push({
                 iteration: requestCounter++,
-                responseTime: args.response.responseTime
+                responseTime: responseTimePrecise
             });
             
         }).on('done', async (e: Error | null, summary: any) => {

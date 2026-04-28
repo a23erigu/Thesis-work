@@ -17,7 +17,7 @@ app.get('/reset', (req, res) => {
         global.gc?.();
         console.log("Garbage collector run");
         res.send("Reset called");
-    }, 100);
+    }, 50);
 });
 
 // Memory tracker middleware (memory check after request is complete)
