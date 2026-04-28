@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 import statsmodels.stats.api as sm
 
-ORM = "Sequelize"       # Decides what ORM is being used
 Title = "Simple select"        # Decides the title
 
 def extract_newman_memory_use(filename):
@@ -18,28 +17,34 @@ def extract_newman_memory_use(filename):
 
     return memory_use_list
 
-orm_memory_use = extract_newman_memory_use("report-Sequelize_SimpleSelect-1001-17-07-36.json")
-sql_memory_use = extract_newman_memory_use("report-SQL_SimpleSelect-1001-16-33-56.json")
+prisma_memory_use = extract_newman_memory_use("reports/Create/report-Prisma_SimpleCreate-100-16-59-36.json")
+sequelize_memory_use = extract_newman_memory_use("reports/Create/report-Sequelize_SimpleCreate-100-10-40-01.json")
+sql_memory_use = extract_newman_memory_use("reports/Create/report-SQL_SimpleCreate-100-11-45-53.json")
 
-mean_orm = mean(orm_memory_use)
+mean_prisma = mean(prisma_memory_use)
+mean_sequelize = mean(sequelize_memory_use)
 mean_sql = mean(sql_memory_use)
 
-orm_interval = stats.norm.interval(0.95, loc=np.mean(orm_memory_use), scale=stats.sem(orm_memory_use))
+prisma_interval = stats.norm.interval(0.95, loc=np.mean(prisma_memory_use), scale=stats.sem(prisma_memory_use))
+sequelize_interval = stats.norm.interval(0.95, loc=np.mean(sequelize_memory_use), scale=stats.sem(sequelize_memory_use))
 sql_interval = stats.norm.interval(0.95, loc=np.mean(sql_memory_use), scale=stats.sem(sql_memory_use))
 
-print(ORM +  f" mean [{mean_orm:.3f}]")
-print(ORM + f" 95% CI [{orm_interval[0]:.3f}, {orm_interval[1]:.3f}]")
+print(f"Prisma mean [{mean_prisma:.3f}]")
+print(f"Prisma 95% CI [{prisma_interval[0]:.3f}, {prisma_interval[1]:.3f}]")
+print()
+print(f"Sequelize mean [{mean_sequelize:.3f}]")
+print(f"Sequelize 95% CI [{sequelize_interval[0]:.3f}, {sequelize_interval[1]:.3f}]")
 print()
 print(f"SQL mean [{mean_sql:.3f}]")
 print(f"SQL 95% CI [{sql_interval[0]:.3f}, {sql_interval[1]:.3f}]")
 
-engines = [ORM, 'Pure-SQL']
-average = [mean_orm, mean_sql]
+engines = ['Sequelize', 'Pure-SQL', 'Prisma']
+average = [mean_sequelize, mean_sql, mean_prisma]
 
 plt.figure(figsize=(8, 6))
-plt.bar(engines, average, color=['#2E5F7F', '#D87741'], alpha=1)
+plt.bar(engines, average, color=['#2E5F7F', '#D87741', '#2E5F7F'], alpha=1)
 
-plt.ylim(bottom=0, top=12)
+plt.ylim(bottom=0, top=35)
 
 plt.title(Title)
 plt.ylabel('Mean memory use (MB)')
