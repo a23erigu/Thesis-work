@@ -6,7 +6,6 @@ import { connect } from "node:http2";
 
 export const prismaCreateAdvanced = async(req: Request, res: Response) => {
     try{
-        const firstName = req.body.firstName;
 
         const query = await prisma.visits.create({
             data:{
@@ -23,7 +22,7 @@ export const prismaCreateAdvanced = async(req: Request, res: Response) => {
 
                         owners:{
                             create:{
-                                first_name: firstName,
+                                first_name: "Entre",
                                 last_name: 'Dublo',
                                 address: 'Le trest avenue 5',
                                 city: 'Paris',
