@@ -1,5 +1,5 @@
-import express from 'express'
-import { prismaCreateSimple, prismaReadSimple, prismaUpdateSimple, prismaDeleteSimple } from './prisma-simple-controller'
+import express from 'express';
+import { prismaCreateSimple, prismaReadSimple, prismaUpdateSimple, prismaDeleteSimple } from './prisma-simple-controller';
 import { prismaCreateAdvanced, prismaReadAdvanced, prismaUpdateAdvanced, prismaDeleteAdvanced } from './prisma-advanced-controller';
 
 const prismaRouter = express.Router();

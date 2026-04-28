@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     res.on('finish', () => {
         memoryTracker();
         global.gc?.();
-        console.log("Request finished");
+        console.log("Ran garbage cleaner after request");
     });
     next();
 });

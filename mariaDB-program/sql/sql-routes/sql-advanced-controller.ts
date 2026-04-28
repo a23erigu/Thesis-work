@@ -4,8 +4,6 @@ import { Request, Response } from "express";
 export const sqlCreateAdvanced = async(req: Request, res: Response) => {
     let conn;
     try{
-        const firstName = req.body.firstName;
-
         conn = await pool.getConnection();
 
         await conn.beginTransaction();
@@ -18,12 +16,11 @@ export const sqlCreateAdvanced = async(req: Request, res: Response) => {
                 city, 
                 telephone) 
             VALUES 
-                (?, 
+                ('Entre', 
                 'Dublo', 
                 'Le trest avenue 5', 
                 'Paris', 
-                '0908234680')`,
-            [firstName]);
+                '0908234680')`);
 
         const ownerId = owner.insertId;
 

@@ -1,14 +1,11 @@
-import { request } from "node:http";
 import { prisma } from "../prisma-db";
 import { Request, Response } from "express";
 
 export const prismaCreateSimple = async(req: Request, res: Response) => {
     try{
-        const firstName = req.body.firstName;
-
         const query = await prisma.owners.create({
             data:{
-                first_name: firstName,
+                first_name: "Deller",
                 last_name: "Menser",
                 address: "Notwere st",
                 city: "Entier",
@@ -34,27 +31,25 @@ export const prismaReadSimple = async(req: Request, res: Response) => {
 
 export const prismaUpdateSimple = async(req: Request, res: Response) => {
     try{
-        const city = req.body.city;
-
-        const menser = await prisma.owners.findFirst({
+        const deller = await prisma.owners.findFirst({
             where:{
-                last_name: "Menser",
+                first_name: "Deller",
                 city: "Entier"
             }
         });
 
-        if(!menser){
-            return res.json({message: "No Menser found"});
+        if(!deller){
+            return res.json({message: "No Deller found"});
         }
 
         const query = await prisma.owners.update({
             where:{
-                id: menser.id,
-                last_name: "Menser",
+                id: deller.id,
+                first_name: "Deller",
                 city: "Entier"
             },
             data:{
-                city: city
+                city: "Exiter"
             }
         });
 
@@ -66,19 +61,19 @@ export const prismaUpdateSimple = async(req: Request, res: Response) => {
 
 export const prismaDeleteSimple = async(req: Request, res: Response) => {
     try{
-        const menser = await prisma.owners.findFirst({
+        const deller = await prisma.owners.findFirst({
             where:{
-                last_name: "Menser"
+                first_name: "Deller"
             }
         })
 
-        if(!menser){
-            return res.json({message: "No Menser found"});
+        if(!deller){
+            return res.json({message: "No Deller found"});
         }
 
         const query = await prisma.owners.delete({
             where:{
-                id: menser.id
+                id: deller.id
             }
         });
 

@@ -15,8 +15,8 @@ app.use(express.json());
 app.get('/reset', (req, res) => {
     setTimeout(() => {
         global.gc?.();
-        console.log("Gargabe collector run");
-        res.send("reset called");
+        console.log("Garbage collector run");
+        res.send("Reset called");
     }, 100);
 });
 
@@ -25,13 +25,14 @@ app.use((req, res, next) => {
     res.on('finish', () => {
         memoryTracker();
         global.gc?.();
-        console.log("ran garbage cleaner after request");
+        console.log("Ran garbage cleaner after request");
     });
     next();
 });
 
 // Establish endpoints (put request endpoints here)
 app.use('/prisma', require('./mariaDB-program/prisma/prisma-routes/prisma-router'));
+app.use('/sequelize', require('./mariaDB-program/sequelize/sequelize-routes/sequelize-router'))
 app.use('/sql', require('./mariaDB-program/sql/sql-routes/sql-router'));
 
 // Test endpoint to ensure express server is running

@@ -67,14 +67,12 @@ export const sqlReadSimple = async (req: Request, res: Response) => {
 export const sqlUpdateSimple = async(req: Request, res: Response) => {
     let conn;
     try {
-        const city = req.body.city;
-
         conn = await pool.getConnection();
 
-        const Menser = await pool.query("SELECT * FROM owners WHERE last_name = 'Menser' AND city = 'Entier' LIMIT 1");
+        const Menser = await pool.query("SELECT * FROM owners WHERE first_name = 'Deller' AND city = 'Entier' LIMIT 1");
         const id = Menser[0].id;
 
-        const query = await pool.query("UPDATE owners SET city = ? WHERE id = " + id, [city]);
+        const query = await pool.query("UPDATE owners SET city = Exiter WHERE id = " + id);
 
         const result = query.insertId.toString();
 
@@ -95,7 +93,7 @@ export const sqlDeleteSimple = async(req: Request, res: Response) => {
         conn = await pool.getConnection();
 
         const owner = await conn.query(`SELECT id FROM owners
-            WHERE last_name = 'Menser' LIMIT 1
+            WHERE first_name = 'Deller' LIMIT 1
             `);
 
         const target = owner[0].id;

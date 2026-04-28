@@ -18,9 +18,9 @@ function createDir(){
     }
 }
 
-function ValidateOutput(){
-    if(!collection.includes("SQL") && !collection.includes("Prisma") && !collection.includes("Sequelize")){
-        console.error("Incorrect collection naming scheme, please include 'SQL', 'Prisma', or 'Sequelize' in the collection name. ex: 'SQL-get-simple.postman_collection'");
+function ValidateInput(){
+    if(!collection){
+        console.error("No collection selected, please choose a collection to run.");
         process.exit();
     } else{
         const dateTime = new Date();
@@ -36,7 +36,6 @@ function ValidateOutput(){
 }
 
 createDir();
-ValidateOutput();
 
 interface Results {
     iteration: number;
@@ -48,9 +47,11 @@ const results: Results[] = [];
 let requestCounter = 0;
 
 async function warmUp() {
+    ValidateInput();
+
     console.log("Running warmup...");
     await RunNewman(true);
-    
+
     await memoryReader.clearMemoryUsage();
 
     try{
