@@ -17,9 +17,9 @@ def extract_newman_memory_use(filename):
 
     return memory_use_list
 
-prisma_memory_use = extract_newman_memory_use("reports/Create/report-Prisma_SimpleCreate-100-16-59-36.json")
-sequelize_memory_use = extract_newman_memory_use("reports/Create/report-Sequelize_SimpleCreate-100-10-40-01.json")
-sql_memory_use = extract_newman_memory_use("reports/Create/report-SQL_SimpleCreate-100-11-45-53.json")
+prisma_memory_use = extract_newman_memory_use("reports/Select/report-Prisma_SimpleSelect-100-16-19-20.json")
+sequelize_memory_use = extract_newman_memory_use("reports/Select/report-Sequelize_SimpleSelect-100-14-32-05.json")
+sql_memory_use = extract_newman_memory_use("reports/Select/report-SQL_SimpleSelect-100-14-30-11.json")
 
 mean_prisma = mean(prisma_memory_use)
 mean_sequelize = mean(sequelize_memory_use)
@@ -38,8 +38,8 @@ print()
 print(f"SQL mean [{mean_sql:.3f}]")
 print(f"SQL 95% CI [{sql_interval[0]:.3f}, {sql_interval[1]:.3f}]")
 
-engines = ['Sequelize', 'Pure-SQL', 'Prisma']
-average = [mean_sequelize, mean_sql, mean_prisma]
+engines = ['Prisma', 'Pure-SQL', 'Sequelize']
+average = [mean_prisma, mean_sql, mean_Sequelize]
 
 plt.figure(figsize=(8, 6))
 plt.bar(engines, average, color=['#2E5F7F', '#D87741', '#2E5F7F'], alpha=1)
