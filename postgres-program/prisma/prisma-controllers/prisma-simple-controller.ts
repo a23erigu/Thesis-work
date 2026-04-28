@@ -4,11 +4,10 @@ import { Request, Response } from "express";
 
 export const prismaCreateSimple = async(req: Request, res: Response) => {
     try{
-        const firstName = req.body.firstName;
 
         const query = await prisma.owners.create({
             data:{
-                first_name: firstName,
+                first_name: "Deller",
                 last_name: "Menser",
                 address: "Notwere st",
                 city: "Entier",
@@ -34,7 +33,6 @@ export const prismaReadSimple = async(req: Request, res: Response) => {
 
 export const prismaUpdateSimple = async(req: Request, res: Response) => {
     try{
-        const city = req.body.city;
 
         const menser = await prisma.owners.findFirst({
             where:{
@@ -54,7 +52,7 @@ export const prismaUpdateSimple = async(req: Request, res: Response) => {
                 city: "Entier"
             },
             data:{
-                city: city
+                city: "Exiter"
             }
         });
 
