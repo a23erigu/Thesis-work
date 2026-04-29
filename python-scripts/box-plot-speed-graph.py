@@ -17,9 +17,9 @@ def extract_newman_times(filename):
 
     return times_list
 
-prisma_times = extract_newman_times("reports/Select/report-Prisma_SimpleSelect-100-16-19-20.json")
-sequelize_times = extract_newman_times("reports/Select/report-Sequelize_SimpleSelect-100-14-32-05.json")
-sql_times = extract_newman_times("reports/Select/report-SQL_SimpleSelect-100-14-30-11.json")
+prisma_times = extract_newman_times("reports/Select/report-Prisma_SimpleSelect-10000-16-22-29.json")
+sequelize_times = extract_newman_times("reports/Select/report-Sequelize_SimpleSelect-10000-14-57-10.json")
+sql_times = extract_newman_times("reports/Select/report-SQL_SimpleSelect-10000-14-40-09.json")
 
 engines = ['Prisma', 'Pure-SQL', 'Sequelize']
 all_time = [prisma_times, sql_times, sequelize_times]

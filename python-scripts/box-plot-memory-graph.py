@@ -17,9 +17,9 @@ def extract_newman_memory_use(filename):
 
     return memory_use_list
 
-prisma_memory_use = extract_newman_memory_use("reports/Select/report-Prisma_SimpleSelect-100-16-19-20.json")
-sequelize_memory_use = extract_newman_memory_use("reports/Select/report-Sequelize_SimpleSelect-100-14-32-05.json")
-sql_memory_use = extract_newman_memory_use("reports/Select/report-SQL_SimpleSelect-100-14-30-11.json")
+prisma_memory_use = extract_newman_memory_use("reports/Select/report-Prisma_SimpleSelect-10000-16-22-29.json")
+sequelize_memory_use = extract_newman_memory_use("reports/Select/report-Sequelize_SimpleSelect-10000-14-57-10.json")
+sql_memory_use = extract_newman_memory_use("reports/Select/report-SQL_SimpleSelect-10000-14-40-09.json")
 
 engines = ['Prisma', 'Pure-SQL', 'Sequelize']
 all_memory = [prisma_memory_use, sql_memory_use, sequelize_memory_use]
@@ -32,7 +32,7 @@ colors = ['#2E5F7F', '#D87741', '#2E5F7F']
 for patch, color in zip(bp['boxes'], colors):
     patch.set_facecolor(color)
 
-plt.ylim(bottom=30, top=32)
+plt.ylim(bottom=30, top=34)
 
 plt.title(Title)
 plt.ylabel('Mean memory use (MB)')
