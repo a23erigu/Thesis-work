@@ -7,7 +7,7 @@ export const sequelizeCreateAdvanced = async (req: Request, res: Response) => { 
     const advancedCreate = await Visit.create(
       {
         visit_date: "2009-08-15",
-        description: "rabis check",
+        description: "rabies check",
         Pet: {
           name: "Blue",
           birth_date: "2007-02-23",

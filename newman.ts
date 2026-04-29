@@ -11,6 +11,7 @@ const port = process.env.PORT || 8090;
 
 let output = '';
 
+// Create a directory for reports if none exists
 function createDir(){
     if(!fs.existsSync(dir)){
         console.log(`Directory ${dir} does not exist, creating...`);
@@ -18,6 +19,7 @@ function createDir(){
     }
 }
 
+// Validates that a collection is selected (does not check if it exists)
 function ValidateInput(){
     if(!collection){
         console.error("No collection selected, please choose a collection to run.");
@@ -35,8 +37,7 @@ function ValidateInput(){
     }
 }
 
-createDir();
-
+// Gets the parameters to run the newman script
 interface Results {
     iteration: number;
     responseTime: number;
@@ -46,6 +47,7 @@ interface Results {
 const results: Results[] = [];
 let requestCounter = 0;
 
+// Warms up the database with an inital run before results are collected
 async function warmUp() {
     ValidateInput();
 
@@ -54,6 +56,7 @@ async function warmUp() {
 
     await memoryReader.clearMemoryUsage();
 
+    // Collect garbage before actual run
     try{
         await fetch(`http://localhost:${port}/reset`);
     } catch(e){
@@ -64,14 +67,17 @@ async function warmUp() {
     await RunNewman(false);
 }
 
+// Newman run method
 async function RunNewman(isWarmup: boolean):Promise<void>{
     return new Promise((resolve, rejects) => {
         const startTimes = new Map<String, number>();
 
+        // Start Newman collection and check for warmup
         newman.run({
             collection: collection,
             iterationCount: isWarmup? 100 : iterations,
         }).on('beforeRequest', (e: Error | null, args: any) => {
+            // Get the time before a request is made
             startTimes.set(args.cursor.ref, performance.now())
         }).on('request', (e: Error | null, args: any) => {
             if(e){
@@ -83,14 +89,16 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 return;
             }
 
+            // Get the time after a request is complete
             const endTime = performance.now()
             const startTime = startTimes.get(args.cursor.ref)
 
-            const responseTimePrecise = startTime ? (endTime - startTime) : args.response.responseTime;
+            const responseTimeFloat = startTime ? (endTime - startTime) : args.response.responseTime;
             
+            // Add result to list and increase request iteration count
             results.push({
                 iteration: requestCounter++,
-                responseTime: responseTimePrecise
+                responseTime: responseTimeFloat
             });
             
         }).on('done', async (e: Error | null, summary: any) => {
@@ -102,10 +110,12 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 return resolve();
             }
             
+            // Get memory reads after collection is finished
             console.log(`Reading memory file...`);
             
             await new Promise(resolve => setTimeout(resolve, 500));
             
+            // Get a list of all memory reads and check that it's the correct amount
             const memoryReadings = await memoryReader.getTotalMemoryUsage();
             
             if(memoryReadings.length !== iterations){
@@ -113,6 +123,7 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 process.exit();
             }
             
+            // Map memory reads to the respective response time
             const allResults = results.map((results, index) => {
                 return{
                     ...results,
@@ -120,6 +131,7 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 };
             });
             
+            // If everything is correct, create report
             if(allResults){
                 fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
                 console.log("--- Test completed ---");
@@ -127,11 +139,14 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
 
                 resolve();
             } else{
-                console.error("Could not get memory from test");
+                console.error("Could not generate report");
+                rejects(e)
                 process.exit();
             }
         })
     })
 }
 
+//runs the createDir and warmUp functions
+createDir();
 warmUp();
