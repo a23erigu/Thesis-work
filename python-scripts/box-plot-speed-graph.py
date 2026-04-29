@@ -36,7 +36,7 @@ plt.ylim(bottom=0, top=8)
 
 plt.title(Title)
 plt.ylabel('Mean response times(ms)')
-plt.xlabel('Engine')
+plt.xlabel('Query engine')
 
 plt.tight_layout()
 plt.show()

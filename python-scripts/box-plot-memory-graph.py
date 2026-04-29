@@ -36,7 +36,7 @@ plt.ylim(bottom=25, top=45)
 
 plt.title(Title)
 plt.ylabel('Mean memory use (MB)')
-plt.xlabel('Engine')
+plt.xlabel('Query engine')
 
 plt.tight_layout()
 plt.show()

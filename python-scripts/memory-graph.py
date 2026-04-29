@@ -48,7 +48,7 @@ plt.ylim(bottom=0, top=35)
 
 plt.title(Title)
 plt.ylabel('Mean memory use (MB)')
-plt.xlabel('Engine')
+plt.xlabel('Query engine')
 
 for i, val in enumerate(average):
     plt.text(i, val + 0.1, f'{val:.2f} MB', ha='center', fontweight='bold')

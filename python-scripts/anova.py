@@ -69,7 +69,7 @@ if p_value < 0.05 and keyword == "responseTime":
                 "Group 1": groups[i],
                 "Group 2": groups[j],
                 "p-value": res.pvalue[i][j],
-                "Significant?": res.pvalue[i, j] < 0.05,
+                "Significant": res.pvalue[i, j] < 0.05,
             })
 
     df = pd.DataFrame(results_list)
