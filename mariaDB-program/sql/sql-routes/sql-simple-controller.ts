@@ -1,7 +1,7 @@
 import pool from "../sql-db-MariaDB"
 import { Request, Response } from "express";
 
-export const sqlCreateSimpleFixed = async(req: Request, res: Response) => {
+export const sqlCreateSimple = async(req: Request, res: Response) => {
     let conn;
     try{
         conn = await pool.getConnection();

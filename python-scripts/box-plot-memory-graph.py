@@ -25,14 +25,14 @@ engines = ['Prisma', 'Pure-SQL', 'Sequelize']
 all_memory = [prisma_memory_use, sql_memory_use, sequelize_memory_use]
 
 plt.figure(figsize=(8, 6))
-bp = plt.boxplot(all_memory, tick_labels=engines, patch_artist=True)
+bp = plt.boxplot(all_memory, tick_labels=engines, patch_artist=True, medianprops={'color': '#000000'})
 
-colors = ['#2E5F7F', '#D87741', '#2E5F7F']
+colors = ['#41a2d8', '#D87741', '#57d841']
 
 for patch, color in zip(bp['boxes'], colors):
     patch.set_facecolor(color)
 
-plt.ylim(bottom=30, top=34)
+plt.ylim(bottom=25, top=45)
 
 plt.title(Title)
 plt.ylabel('Mean memory use (MB)')
