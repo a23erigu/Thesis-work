@@ -70,7 +70,7 @@ async function warmUp() {
 // Newman run method
 async function RunNewman(isWarmup: boolean):Promise<void>{
     return new Promise((resolve, rejects) => {
-        const startTimes = new Map<String, number>();
+        //const startTimes = new Map<String, number>();
 
         // Start Newman collection and check for warmup
         newman.run({
@@ -78,7 +78,7 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
             iterationCount: isWarmup? 100 : iterations,
         }).on('beforeRequest', (e: Error | null, args: any) => {
             // Get the time before a request is made
-            startTimes.set(args.cursor.ref, performance.now())
+            //startTimes.set(args.cursor.ref, performance.now())
         }).on('request', (e: Error | null, args: any) => {
             if(e){
                 console.error("Request failed: ", e);
@@ -90,15 +90,15 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
             }
 
             // Get the time after a request is complete
-            const endTime = performance.now()
-            const startTime = startTimes.get(args.cursor.ref)
+            //const endTime = performance.now()
+            //const startTime = startTimes.get(args.cursor.ref)
 
-            const responseTimeFloat = startTime ? (endTime - startTime) : args.response.responseTime;
+            //const responseTimeFloat = startTime ? (endTime - startTime) : args.response.responseTime;
             
             // Add result to list and increase request iteration count
             results.push({
                 iteration: requestCounter++,
-                responseTime: responseTimeFloat
+                responseTime: args.response.responseTime
             });
             
         }).on('done', async (e: Error | null, summary: any) => {

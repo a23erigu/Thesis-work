@@ -69,10 +69,10 @@ export const sqlUpdateSimple = async(req: Request, res: Response) => {
     try {
         conn = await pool.getConnection();
 
-        const Menser = await pool.query("SELECT * FROM owners WHERE first_name = 'Deller' AND city = 'Entier' LIMIT 1");
-        const id = Menser[0].id;
+        const Deller = await pool.query("SELECT * FROM owners WHERE first_name = 'Deller' AND city = 'Entier' LIMIT 1");
+        const id = Deller[0].id;
 
-        const query = await pool.query("UPDATE owners SET city = Exiter WHERE id = " + id);
+        const query = await pool.query("UPDATE owners SET city = 'Exiter' WHERE id = " + id);
 
         const result = query.insertId.toString();
 
