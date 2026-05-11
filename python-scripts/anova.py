@@ -22,9 +22,9 @@ def get_file(file):
 
     return report
 
-sql_times = get_file('Reports/test-report-SQL-get-advanced-1000-00-53-38.json')
-prisma_times = get_file('./Reports/test-report-Prisma-get-advanced-1000-00-54-33.json')
-sequelize_times = get_file('./Reports/test-report-Sequelize-get-advanced-1000-00-54-06.json')
+sql_times = get_file('reports/Delete/report-Prisma_AdvancedDelete-10000-16-25-59.json')
+prisma_times = get_file('reports/Delete/report-Sequelize_AdvancedDelete-10000-15-29-13.json')
+sequelize_times = get_file('reports/Delete/report-SQL_AdvancedDelete-10000-14-20-19.json')
 
 print(f'Loaded {len(sql_times)} pure-SQL results')
 print(f'Loaded {len(prisma_times)} Prisma results')
