@@ -4,7 +4,6 @@ import * as path from 'path'
 
 export class MemoryUsageChecker{
     private file = path.join(process.cwd(), 'memoryReadings.txt');
-    private baseLine = 0;
 
     // Initalizer function to ensure the program is running correctly with all prerequisites
     public initialize(){
@@ -72,12 +71,13 @@ export class MemoryUsageChecker{
 
             return memArray.map(val => parseFloat(val));
         }catch(e){
-            console.error("Could not read memory usage");
+            console.error("Could not read memory usage", e);
             return [];
         }
     }
 }
 
+// Create and export instance of memory checker
 const memoryUsage = new MemoryUsageChecker();
 
 export default memoryUsage;

@@ -1,0 +1,93 @@
+Newman pseudocode file
+
+async = stop parallel access to async functions
+
+(imports)
+
+(constants)
+
+output variable
+
+function createDir(){
+    if (directory does not exist){
+        print creation
+        create directory
+    }
+}
+
+function validateInput(){
+    if (no collection entered in param){
+        print to select a collection
+    } else{
+        get current time
+        get hours as XX
+        get minutes as XX
+        get seconds as XX
+
+        put together as string for current time
+
+        set report name as "output" variable
+    }
+}
+
+(results which are created after newman test)
+interface Results{
+    get iteration count as number
+    get response time as number
+    get memory use as number or null (will be null for now)
+}
+
+create constant based on Results interface and make it empty
+reset iteration counter
+
+async function warmUp(){
+    check that input is valid
+
+    run warmup sequence in async
+
+    clear the memory usage txt file
+
+    try{
+        collect garbage
+    } catch(error){
+        print error
+    }
+
+    run real test sequence in async
+}
+
+async function RunNewman(warmup: true | false): return empty Promise{
+    return new Promise(resolve, reject){
+        run Newman{
+            collection: from argument
+            iteration count: if warmup 100 | from argument
+        }.on request(error | null, any args){
+            push to results{
+                iteration++,
+                responseTime from measured responseTime
+            }
+        }.on done(error | null, any args){
+            if warmup{
+                return reject | resolve
+            }
+
+            pause for 500ms to let program finish reading memory
+
+            get memory reads from memory reader script
+
+            if memory reads != iterations{
+                reject promise and exit process since there are not enough memory reads
+            }
+
+            map results into new array object and add memory usage to it
+
+            if all results are correct{
+                create report with name as output
+            } else{
+                reject promise and exit program
+            }
+        }
+    }
+}
+
+run createDir and warmUp functions to set up and start program

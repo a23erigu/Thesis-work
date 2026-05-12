@@ -1,0 +1,72 @@
+Memory usage psuedo code
+
+(imports)
+
+export class MemoryUsageChecker{
+    variable "file" for getting current working directory
+
+    public function initialize(){
+        call createFile function
+
+        print where the file is created
+
+        if manual garbage collector not enabled{
+            print error and exit program
+        } else{
+            print success
+        }
+
+        return{
+            get current memory usage as "reading"
+
+            add "reading" to memory reading file using appendToFile function
+        }
+    }
+
+    public function createFile(){
+        if file does not exist{
+            print creating file
+            try{
+                create memory reading file from "file" variable
+                print success
+            } catch(error){
+                print error
+            }
+        }
+    }
+
+    public asunc function clearMemoryUsage(){
+        clear all text in file
+    }
+
+    private function appendToFile(reading as number){
+        try{
+            add reading from initialize function return to file
+        } catch(error){
+            print error
+        }
+    }
+
+    public function getMemoryUsage(){
+        get current memory usage from process
+        turn into megabytes
+
+        return reading as megabytes
+    }
+
+    public async function getTotalMemoryUsage(): return number promise{
+        try{
+
+        create variable "data" of all memory reads from memory reading file
+
+        create array from "data" using "," to split elements
+        and trim to remove whitespace where there is a reading
+
+        return memory array as floats instead of strings
+        } catch(error){
+            print error and return empty array
+        }
+    }
+}
+
+create new instance of class and export

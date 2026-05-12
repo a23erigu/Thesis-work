@@ -19,8 +19,8 @@ function createDir(){
     }
 }
 
-// Validates that a collection is selected (does not check if it exists)
-function ValidateInput(){
+// Validates that a collection is selected (does not check if it exists but Newman can't run non-existing collections anyway)
+function validateInput(){
     if(!collection){
         console.error("No collection selected, please choose a collection to run.");
         process.exit();
@@ -41,7 +41,7 @@ function ValidateInput(){
 interface Results {
     iteration: number;
     responseTime: number;
-    memoryUse?: number;
+    memoryUse?: number; // Collected later so should be null for now
 }
 
 const results: Results[] = [];
@@ -49,8 +49,9 @@ let requestCounter = 0;
 
 // Warms up the database with an inital run before results are collected
 async function warmUp() {
-    ValidateInput();
+    validateInput();
 
+    // Warmup run to remove socket init delay
     console.log("Running warmup...");
     await RunNewman(true);
 
@@ -63,13 +64,15 @@ async function warmUp() {
         console.error("Could not run garbage collector", e);
     }
     
+    // Do the actual run
     console.log("Running test...");
     await RunNewman(false);
 }
 
 // Newman run method
 async function RunNewman(isWarmup: boolean):Promise<void>{
-    return new Promise((resolve, rejects) => {
+    // Start new promise
+    return new Promise((resolve, reject) => {
         //const startTimes = new Map<String, number>();
 
         // Start Newman collection and check for warmup
@@ -100,10 +103,10 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 iteration: requestCounter++,
                 responseTime: args.response.responseTime
             });
-            
         }).on('done', async (e: Error | null, summary: any) => {
+            // Return promise state (only if encountered error or is warn-up sequence)
             if(e){
-                return rejects(e)
+                return reject(e)
             }
             
             if(isWarmup){
@@ -120,10 +123,12 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
             
             if(memoryReadings.length !== iterations){
                 console.error("Incorrect amount of memory readings");
+                reject(e);
                 process.exit();
             }
             
-            // Map memory reads to the respective response time
+            // Map memory readings to the respective response time by index
+            // Takes all objects in results array and copies them into the allResults array
             const allResults = results.map((results, index) => {
                 return{
                     ...results,
@@ -131,7 +136,7 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 };
             });
             
-            // If everything is correct, create report
+            // If everything is correct create report, otherwise throw error
             if(allResults){
                 fs.writeFileSync(output, JSON.stringify(allResults, null, 2));
                 console.log("--- Test completed ---");
@@ -140,7 +145,7 @@ async function RunNewman(isWarmup: boolean):Promise<void>{
                 resolve();
             } else{
                 console.error("Could not generate report");
-                rejects(e)
+                reject(e)
                 process.exit();
             }
         })
