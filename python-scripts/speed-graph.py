@@ -42,7 +42,7 @@ engines = ['Prisma', 'Pure-SQL', 'Sequelize', ]
 average = [mean_prisma, mean_sql, mean_sequelize, ]
 
 plt.figure(figsize=(8, 6))
-plt.bar(engines, average, color=['#2E5F7F', '#D87741', '#2E5F7F'], alpha=1)
+plt.bar(engines, average, color=['#41a2d8', '#D87741', '#57d841'], alpha=1)
 
 plt.ylim(bottom=0, top=8)
 

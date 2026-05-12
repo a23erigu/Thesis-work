@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 import statsmodels.stats.api as sm
 
-Title = "Simple Select"        # Decides the title
+Title = "Advanced read"        # Decides the title
 
 def extract_newman_times(filename):
     with open(filename, 'r') as f:
@@ -17,9 +17,9 @@ def extract_newman_times(filename):
 
     return times_list
 
-prisma_times = extract_newman_times("reports/Select/report-Prisma_SimpleSelect-10000-16-22-29.json")
-sequelize_times = extract_newman_times("reports/Select/report-Sequelize_SimpleSelect-10000-14-57-10.json")
-sql_times = extract_newman_times("reports/Select/report-SQL_SimpleSelect-10000-14-40-09.json")
+prisma_times = extract_newman_times("reports/Select/report-Prisma_AdvancedSelect-10000-16-42-06.json")
+sequelize_times = extract_newman_times("reports/Select/report-Sequelize_AdvancedSelect-10000-15-24-00.json")
+sql_times = extract_newman_times("reports/Select/report-SQL_AdvancedSelect-10000-15-39-57.json")
 
 engines = ['Prisma', 'Pure-SQL', 'Sequelize']
 all_time = [prisma_times, sql_times, sequelize_times]
@@ -32,7 +32,7 @@ colors = ['#41a2d8', '#D87741', '#57d841']
 for patch, color in zip(bp['boxes'], colors):
     patch.set_facecolor(color)
 
-plt.ylim(bottom=0, top=8)
+plt.ylim(bottom=0, top=26)
 
 plt.title(Title)
 plt.ylabel('Mean response times(ms)')
