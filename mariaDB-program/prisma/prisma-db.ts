@@ -7,8 +7,11 @@ const adapter = new PrismaMariaDb({
     user: process.env.MDB_USER,
     password: process.env.MDB_PASSWORD,
     database: process.env.MDB_NAME,
-    connectionLimit: 10
+    connectionLimit: 10,
 })
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient({
+    adapter,
+    log: ["query"]
+});
 
 export { prisma };

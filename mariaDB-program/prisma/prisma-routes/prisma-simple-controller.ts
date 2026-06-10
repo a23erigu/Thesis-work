@@ -33,7 +33,7 @@ export const prismaUpdateSimple = async(req: Request, res: Response) => {
     try{
         const deller = await prisma.owners.findFirst({
             where:{
-                first_name: "Deller",
+                last_name: "Menser",
                 city: "Entier"
             }
         });
@@ -45,7 +45,7 @@ export const prismaUpdateSimple = async(req: Request, res: Response) => {
         const query = await prisma.owners.update({
             where:{
                 id: deller.id,
-                first_name: "Deller",
+                last_name: "Menser",
                 city: "Entier"
             },
             data:{
@@ -61,19 +61,19 @@ export const prismaUpdateSimple = async(req: Request, res: Response) => {
 
 export const prismaDeleteSimple = async(req: Request, res: Response) => {
     try{
-        const deller = await prisma.owners.findFirst({
+        const menser = await prisma.owners.findFirst({
             where:{
-                first_name: "Deller"
+                last_name: "Menser"
             }
         })
 
-        if(!deller){
-            return res.json({message: "No Deller found"});
+        if(!menser){
+            return res.json({message: "No Menser found"});
         }
 
         const query = await prisma.owners.delete({
             where:{
-                id: deller.id
+                id: menser.id
             }
         });
 

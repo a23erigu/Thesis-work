@@ -170,7 +170,7 @@ export const sqlDeleteAdvanced = async(req: Request, res: Response) => {
 
         await conn.beginTransaction();
 
-        const owner = await conn.query(`SELECT owners.id FROM owners WHERE last_name = 'Dublo' LIMIT 1`);
+        const owner = await conn.query(`SELECT owners.id FROM owners WHERE first_name = 'Entre' LIMIT 1`);
         const ownerId = owner[0].id;
 
         const pet = await conn.query(`SELECT pets.id FROM pets WHERE owner_id = ?`, [ownerId]);

@@ -88,7 +88,7 @@ export const prismaUpdateAdvanced = async(req: Request, res: Response) => {
             where:{
                 pets:{
                     owners:{
-                        last_name: 'Dublo'
+                        last_name: "Dublo"
                     }
                 }
             },
@@ -98,7 +98,7 @@ export const prismaUpdateAdvanced = async(req: Request, res: Response) => {
         });
 
         if(!visit){
-            console.log("No owner with that last name");
+            console.log("No owner with that first name");
             return;
         }
 
@@ -132,7 +132,7 @@ export const prismaDeleteAdvanced = async(req: Request, res: Response) => {
     try{
         const owner = await prisma.owners.findFirst({
             where:{
-                last_name: 'Dublo'
+                last_name: "Dublo"
             }
         });
 
