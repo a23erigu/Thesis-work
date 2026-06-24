@@ -80,7 +80,7 @@ for ax in axs.flat:
 plt.suptitle(Title)
 
 fig.supylabel('Mean response times(ms)')
-fig.supxlabel('Engines')
+fig.supxlabel('Query engine')
 
 plt.tight_layout()
 plt.show()
