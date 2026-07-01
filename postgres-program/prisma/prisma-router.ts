@@ -5,15 +5,15 @@ import { prismaCreateAdvanced, prismaReadAdvanced, prismaUpdateAdvanced, prismaD
 const prismaRouter = express.Router();
 
 // Simple
-prismaRouter.get('/Simple/Create', prismaCreateSimple)
-prismaRouter.get('/Simple/Select', prismaReadSimple);
-prismaRouter.get('/Simple/Update', prismaUpdateSimple)
-prismaRouter.get('/Simple/Delete', prismaDeleteSimple)
+prismaRouter.get('/createSimple', prismaCreateSimple)
+prismaRouter.get('/readSimple', prismaReadSimple);
+prismaRouter.get('/updateSimple', prismaUpdateSimple)
+prismaRouter.get('/deleteSimple', prismaDeleteSimple)
 
 // Advanced
-prismaRouter.get('/Advanced/Create', prismaCreateAdvanced)
-prismaRouter.get('/Advanced/Select', prismaReadAdvanced);
-prismaRouter.get('/Advanced/Update', prismaUpdateAdvanced)
-prismaRouter.get('/Advanced/Delete', prismaDeleteAdvanced)
+prismaRouter.get('/createAdvanced', prismaCreateAdvanced)
+prismaRouter.get('/readAdvanced', prismaReadAdvanced);
+prismaRouter.get('/updateAdvanced', prismaUpdateAdvanced)
+prismaRouter.get('/deleteAdvanced', prismaDeleteAdvanced)
 
 module.exports = prismaRouter;

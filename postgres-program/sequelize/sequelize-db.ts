@@ -1,10 +1,13 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize(process.env.PG_NAME, process.env.PG_USER, process.env.PG_PASSWORD, {  //database, username, password
-  host: process.env.PG_HOST,
+const sequelize = new Sequelize(process.env.PG_NAME!, process.env.PG_USER!, process.env.PG_PASSWORD!, {  //database, username, password
+  host: process.env.PG_HOST!,
   dialect: 'postgres',
   logging: console.log,
-  port: process.env.PG_PORT
+  port: Number(process.env.PG_PORT)!,
+  pool:{
+    max: 10
+  }
 });
 
 try {

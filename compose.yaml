@@ -18,7 +18,7 @@ services:
     ports:
       - 8090:8090
     depends_on:
-      - database-mariadb
+      - database-postgres
     volumes:
       - .:/app
       - /app/node_modules
@@ -28,8 +28,6 @@ services:
     restart: always
     ports:
       - 8080:8080
-    depends_on:
-      - database-mariadb
   
   database-mariadb:
     image: mariadb
@@ -38,10 +36,22 @@ services:
       MARIADB_ROOT_PASSWORD: example
       MARIADB_DATABASE: petclinic
     ports:
-    - "3306:3306"
+      - 3306:3306
     volumes:
       - mariadb_data:/var/lib/mysql
-      - ./db-files:/docker-entrypoint-initdb.d
+      - ./db-files/MariaDB:/docker-entrypoint-initdb.d
+  
+  database-postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: petclinic
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db-files/Postgres:/docker-entrypoint-initdb.d
       
 networks:
   backend-network:
@@ -50,3 +60,4 @@ networks:
 
 volumes:
   mariadb_data:
+  pgdata:

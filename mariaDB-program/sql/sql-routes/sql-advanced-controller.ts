@@ -120,7 +120,8 @@ export const sqlUpdateAdvanced = async(req: Request, res: Response) => {
                 ON visits.pet_id = pets.id
             INNER JOIN owners 
                 ON pets.owner_id = owners.id
-            WHERE owners.last_name = 'Dublo' LIMIT 1
+            WHERE owners.last_name = 'Dublo'
+            AND owners.address = 'Le trest avenue 5' LIMIT 1
             `)
 
         const visitId = visit[0].id;

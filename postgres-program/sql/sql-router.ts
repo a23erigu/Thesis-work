@@ -5,15 +5,15 @@ import { AdvancedSelect, AdvancedCreate, AdvancedDelete, AdvancedUpdate} from '.
 const sqlRouter = express.Router();
 
 // Simple
-sqlRouter.get("/Simple/Select", SimpleSelect);
-sqlRouter.get("/Simple/Create", SimpleCreate);
-sqlRouter.get("/Simple/Delete", SimpleDelete);
-sqlRouter.get("/Simple/Update", SimpleUpdate)
+sqlRouter.get("/readSimple", SimpleSelect);
+sqlRouter.get("/createSimple", SimpleCreate);
+sqlRouter.get("/deleteSimple", SimpleDelete);
+sqlRouter.get("/updateSimple", SimpleUpdate);
 
 // Advanced
-sqlRouter.get("/Advanced/Select", AdvancedSelect);
-sqlRouter.get("/Advanced/Create", AdvancedCreate);
-sqlRouter.get("/Advanced/Delete", AdvancedDelete);
-sqlRouter.get("/Advanced/Update", AdvancedUpdate)
+sqlRouter.get("/readAdvanced", AdvancedSelect);
+sqlRouter.get("/createAdvanced", AdvancedCreate);
+sqlRouter.get("/deleteAdvanced", AdvancedDelete);
+sqlRouter.get("/updateAdvanced", AdvancedUpdate);
 
 module.exports = sqlRouter;

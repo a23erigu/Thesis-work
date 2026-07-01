@@ -3,7 +3,7 @@ Memory usage psuedo code
 (imports)
 
 export class MemoryUsageChecker{
-    variable "file" for getting current working directory
+    variable "file" for creating file in current working directory
 
     public function initialize(){
         call createFile function

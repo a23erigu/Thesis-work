@@ -45,7 +45,7 @@ export const AdvancedCreate = async (req: Request, res: Response) => {    // Cre
           Owner: {
             first_name: "Entre",
             last_name: "Dublo",
-            address: "le trest avenue 5",
+            address: "Le trest avenue 5",
             city: "Paris",
             telephone: "0908234680",
           }
@@ -126,7 +126,8 @@ export const AdvancedUpdate = async (req: Request, res: Response) => {  // Updat
         include: [{
           model: Owner,
           where: {
-            last_name: "Dublo"
+            last_name: "Dublo",
+            address: "Le trest avenue 5"
           },
           required: true,
         }],

@@ -8,7 +8,7 @@
   "main": "Petclinic.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx tsx --expose-gc Postgres-app.ts",
+    "start": "tsx --expose-gc --env-file=.env Postgres-app.ts",
     "dev": "tsx --expose-gc --env-file=.env MariaDB-app.ts"
   },
   "dependencies": {

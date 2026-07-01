@@ -1,8 +1,13 @@
+import pool from "../sql/sql-db-MariaDB";
+
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.MDB_NAME, process.env.MDB_USER, process.env.MDB_PASSWORD, {
     host: process.env.MDB_HOST,
-    dialect: 'mariadb'
+    dialect: 'mariadb',
+    pool:{
+        max: 10
+    }
 });
 
 const auth = async () => {

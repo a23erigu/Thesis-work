@@ -4,8 +4,9 @@ import { MemoryUsageChecker } from './memory-usage'
 
 dotenv.config();
 
+const process = require('process')
 const app = express();
-const PORT = 8090;    // the port used by the website
+const PORT = process.env.PORT || 5000;    // the port used by the website
 const memoryChecker = new MemoryUsageChecker;
 const memoryTracker = memoryChecker.initialize();
 
@@ -30,6 +31,11 @@ app.use((req, res, next) => {
     });
     next();
 });
+
+app.use((req, res, next) => {
+    console.log(`Recieved request from ${req.url} using ${req.method}`);
+    next();
+})
 
 app.use("/sequelize", require("./postgres-program/sequelize/sequelize-router"));
 app.use("/prisma", require("./postgres-program/prisma/prisma-router"))

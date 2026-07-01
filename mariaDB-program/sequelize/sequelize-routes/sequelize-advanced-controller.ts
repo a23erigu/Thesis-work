@@ -81,7 +81,8 @@ export const sequelizeUpdateAdvanced = async (req: Request, res: Response) => { 
         include: [{
           model: Owner,
           where: {
-            last_name: "Dublo"
+            last_name: "Dublo",
+            address: "Le trest avenue 5"
           },
           required: true,
         }],

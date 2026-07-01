@@ -14,15 +14,15 @@ sequelizeRouter.get("/AllOwners", AllOwners);
 sequelizeRouter.get("/AllOwnersPure", AllOwnersPure);
 
 // Simple
-sequelizeRouter.get("/Simple/Select", SimpleSelect);
-sequelizeRouter.get("/Simple/Create", SimpleCreate);
-sequelizeRouter.get("/Simple/Delete", SimpleDelete);
-sequelizeRouter.get("/Simple/Update", SimpleUpdate);
+sequelizeRouter.get("/readSimple", SimpleSelect);
+sequelizeRouter.get("/createSimple", SimpleCreate);
+sequelizeRouter.get("/deleteSimple", SimpleDelete);
+sequelizeRouter.get("/updateSimple", SimpleUpdate);
 
 // Advanced
-sequelizeRouter.get("/Advanced/Select", AdvancedSelect);
-sequelizeRouter.get("/Advanced/Create", AdvancedCreate);
-sequelizeRouter.get("/Advanced/Delete", AdvancedDelete);
-sequelizeRouter.get("/Advanced/Update", AdvancedUpdate);
+sequelizeRouter.get("/readAdvanced", AdvancedSelect);
+sequelizeRouter.get("/createAdvanced", AdvancedCreate);
+sequelizeRouter.get("/deleteAdvanced", AdvancedDelete);
+sequelizeRouter.get("/updateAdvanced", AdvancedUpdate);
 
 module.exports = sequelizeRouter;

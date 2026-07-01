@@ -88,7 +88,8 @@ export const prismaUpdateAdvanced = async(req: Request, res: Response) => {
             where:{
                 pets:{
                     owners:{
-                        last_name: "Dublo"
+                        last_name: "Dublo",
+                        address: "Le trest avenue 5"
                     }
                 }
             },
@@ -98,7 +99,7 @@ export const prismaUpdateAdvanced = async(req: Request, res: Response) => {
         });
 
         if(!visit){
-            console.log("No owner with that first name");
+            console.log("No owner with that last name");
             return;
         }
 

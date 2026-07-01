@@ -92,7 +92,8 @@ export const prismaUpdateAdvanced = async(req: Request, res: Response) => {
             where:{
                 pets:{
                     owners:{
-                        last_name: 'Dublo'
+                        last_name: 'Dublo',
+                        address: "Le trest avenue 5"
                     }
                 }
             },
