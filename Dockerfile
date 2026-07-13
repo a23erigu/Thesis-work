@@ -20,4 +20,4 @@ ENV port=8090
 EXPOSE 8090
 
 # Start container
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "dev" ]

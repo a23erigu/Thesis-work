@@ -18,7 +18,7 @@ services:
     ports:
       - 8090:8090
     depends_on:
-      - database-postgres
+      - database-mariadb
     volumes:
       - .:/app
       - /app/node_modules

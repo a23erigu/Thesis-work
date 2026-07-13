@@ -1,0 +1,252 @@
+RT{
+    PG{
+        Simple{
+            Create{
+                F-Statistics = 833.874
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Read{
+                F-Statistics = 474.525
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  7.928479e-07         True
+            }
+            Update{
+                F-Statistics = 1672.499
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Delete{
+                F-Statistics = 1100.940
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+        }
+        Advanced{
+            Create{
+                F-Statistics = 10046.990
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Read{
+                F-Statistics = 2173.960
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Update{
+                F-Statistics = 44511.580
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Delete{
+                F-Statistics = 1993.352
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  2.358154e-02         True
+            }
+        }
+    }
+    MDB{
+        Simple{
+            Create{
+                F-Statistics = 3857.210
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Read{
+                F-Statistics = 671.176
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Update{
+                F-Statistics = 10629.325
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Delete{
+                F-Statistics = 5276.685
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+        }
+        Advanced{
+            Create{
+                F-Statistics = 14567.218
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Read{
+                F-Statistics = 3107.047
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Update{
+                F-Statistics = 6000.476
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+            Delete{
+                F-Statistics = 11996.497
+                p-value = 0.000
+                Result is statistically significant: 0.000
+                    Group 1    Group 2       p-value  Significant
+                0  Pure-SQL     Prisma  5.026313e-12         True
+                1  Pure-SQL  Sequelize  5.026313e-12         True
+                2    Prisma  Sequelize  5.026313e-12         True
+            }
+        }
+    }
+}
+MEM{
+    PG{
+        Simple{
+            Create{
+                H-Statistics = 25997.513
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Read{
+                H-Statistics = 24375.787
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Update{
+                H-Statistics = 26674.340
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Delete{
+            H-Statistics = 26741.641
+            p-value = 0.000
+            Result is statistically significant: 0.000
+            }
+        }
+        Advanced{
+            Create{
+                H-Statistics = 26666.684
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Read{
+                H-Statistics = 26652.459
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Update{
+                H-Statistics = 26676.122
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Delete{
+                H-Statistics = 26696.136
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+        }
+    }
+    MDB{
+        Simple{
+            Create{
+                H-Statistics = 26036.606
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Read{
+                H-Statistics = 26199.954
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Update{
+                H-Statistics = 26672.582
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Delete{
+                H-Statistics = 26673.456
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+        }
+        Advanced{
+            Create{
+                H-Statistics = 26667.117
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Read{
+                H-Statistics = 26667.984
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Update{
+                H-Statistics = 26674.837
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+            Delete{
+                H-Statistics = 26682.795
+                p-value = 0.000
+                Result is statistically significant: 0.000
+            }
+        }
+    }
+}
