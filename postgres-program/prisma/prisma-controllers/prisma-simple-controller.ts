@@ -34,21 +34,20 @@ export const prismaReadSimple = async(req: Request, res: Response) => {
 export const prismaUpdateSimple = async(req: Request, res: Response) => {
     try{
 
-        const menser = await prisma.owners.findFirst({
+        const deller = await prisma.owners.findFirst({
             where:{
-                last_name: "Menser",
+                first_name: "Deller",
                 city: "Entier"
             }
         });
 
-        if(!menser){
-            return res.json({message: "No Menser found"});
+        if(!deller){
+            return res.json({message: "No Deller found"});
         }
 
         const query = await prisma.owners.update({
             where:{
-                id: menser.id,
-                last_name: "Menser",
+                id: deller.id,
                 city: "Entier"
             },
             data:{
